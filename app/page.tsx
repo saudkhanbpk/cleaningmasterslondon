@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import heroImg from "../assets/Hero.jpg"
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -61,9 +62,9 @@ export default function Home() {
       {/* Hero Section */}
       <section id="home" className="relative h-[600px] flex items-center justify-center text-white">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?auto=format&fit=crop&q=80&w=2070')",
+            backgroundImage: `url(${heroImg.src})`,
           }}
         >
           <div className="absolute inset-0 bg-black/50" />
