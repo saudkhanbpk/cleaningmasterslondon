@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Mail, Phone, Clock, Star, CheckCircle2, Sparkles, Shield, Users } from "lucide-react";
+import { MapPin, Mail, Phone, Clock, Star, CheckCircle2, Sparkles, Shield, Users, ArrowRight, Building2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import heroImg from "../assets/Hero.jpg"
+import Link from "next/link";
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -57,6 +58,39 @@ export default function Home() {
     },
   ];
 
+  const features = [
+    {
+      icon: <Shield className="w-12 h-12 text-primary" />,
+      title: "Insured & Bonded",
+      description: "Your property is protected with our comprehensive insurance coverage",
+    },
+    {
+      icon: <Users className="w-12 h-12 text-primary" />,
+      title: "Expert Team",
+      description: "Professionally trained and background-checked cleaning specialists",
+    },
+    {
+      icon: <Sparkles className="w-12 h-12 text-primary" />,
+      title: "Eco-Friendly",
+      description: "Using sustainable and environmentally safe cleaning products",
+    },
+    {
+      icon: <Building2 className="w-12 h-12 text-primary" />,
+      title: "All Properties",
+      description: "Services for homes, offices, and commercial spaces",
+    },
+    {
+      icon: <Zap className="w-12 h-12 text-primary" />,
+      title: "Quick Response",
+      description: "Fast and reliable service when you need it most",
+    },
+    {
+      icon: <CheckCircle2 className="w-12 h-12 text-primary" />,
+      title: "Satisfaction Guaranteed",
+      description: "Your complete satisfaction is our top priority",
+    },
+  ];
+
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -72,14 +106,44 @@ export default function Home() {
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-5xl font-bold mb-6">Transforming Spaces, One Clean at a Time</h1>
           <p className="text-xl mb-8">Professional cleaning services for homes and businesses</p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
-            Get a Free Quote
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link href="/quote">
+  <Button size="lg" className="bg-primary hover:bg-primary/90">
+    Get a Free Quote
+  </Button>
+</Link>
+            <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20">
+              View Our Services
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-20 bg-secondary/10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Why Choose CleanPro</h2>
+            <p className="text-muted-foreground">
+              Experience excellence in cleaning services with our professional team
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex flex-col items-center text-center">
+                  <div className="mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-secondary/20">
+      <section id="services" className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Services</h2>
@@ -100,33 +164,12 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-muted-foreground">{service.description}</p>
+                  <p className="text-muted-foreground mb-4">{service.description}</p>
+                  <Button variant="outline" className="w-full group">
+                    Learn More
+                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </Button>
                 </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section id="about" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Us</h2>
-            <p className="text-muted-foreground">
-              Experience the difference with our professional cleaning services
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: "Eco-Friendly Products", description: "Safe for your family and the environment", icon: <Sparkles className="w-12 h-12 text-primary mb-4" /> },
-              { title: "Experienced Team", description: "Trained and trusted professionals", icon: <Users className="w-12 h-12 text-primary mb-4" /> },
-              { title: "100% Satisfaction", description: "Guaranteed quality service", icon: <Shield className="w-12 h-12 text-primary mb-4" /> },
-            ].map((benefit, index) => (
-              <Card key={index} className="text-center p-6">
-                <div className="flex justify-center">{benefit.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-muted-foreground">{benefit.description}</p>
               </Card>
             ))}
           </div>
