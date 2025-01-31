@@ -20,10 +20,12 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">CleanPro</span>
-          </div>
+          <Link href="/">
+            <div className="flex items-center space-x-2 cursor-pointer">
+              <Sparkles className="h-6 w-6 text-primary" />
+              <span className="text-xl font-bold">CleanPro</span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -44,7 +46,11 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 text-foreground"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -70,7 +76,6 @@ export default function Navbar() {
     </nav>
   );
 }
-
 
 // "use client";
 
