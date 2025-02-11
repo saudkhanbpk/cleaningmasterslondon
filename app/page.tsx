@@ -221,7 +221,7 @@ export default function Home() {
           <div className="max-w-2xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
             <p className="text-muted-foreground">
-              Don't just take our word for it - hear from our satisfied
+              Do not just take our word for it - hear from our satisfied
               customers
             </p>
           </div>
