@@ -9,16 +9,16 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface phoneFormData {
-  phoneNumber: string;
+interface emailFormData {
+  emailAddress: string;
   verificationCode: string;
 }
 
 interface FormDataType {
   name: string;
   location: string;
-  emailAddress: string;
   phoneNumber: string;
+  emailAddress: string;
   receptionRooms: { selected: string; other: string; showOther: boolean };
   cleaningFrequency: { selected: string; other: string; showOther: boolean };
   preferredDays: { selected: string[]; other: string; showOther: boolean };
@@ -37,16 +37,16 @@ export default function ModelPage() {
   const [isVerified, setisVerified] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const [phoneFormData, setphoneFormData] = useState<phoneFormData>({
-    phoneNumber: "",
+  const [emailFormData, setemailFormData] = useState<emailFormData>({
+    emailAddress: "",
     verificationCode: "",
   });
 
   const [formData, setFormData] = useState<FormDataType>({
     name: "",
     location: "",
-    emailAddress: "",
     phoneNumber: "",
+    emailAddress: "",
     receptionRooms: { selected: "", other: "", showOther: false },
     cleaningFrequency: { selected: "", other: "", showOther: false },
     preferredDays: { selected: [], other: "", showOther: false },
@@ -79,8 +79,8 @@ export default function ModelPage() {
       FormDataType,
       | "name"
       | "location"
-      | "emailAddress"
       | "phoneNumber"
+      | "emailAddress"
       | "additionalDetails"
       | "preferredDays"
     >,
@@ -101,8 +101,8 @@ export default function ModelPage() {
       FormDataType,
       | "name"
       | "location"
-      | "emailAddress"
       | "phoneNumber"
+      | "emailAddress"
       | "preferredDays"
       | "additionalDetails"
     >,
@@ -118,7 +118,7 @@ export default function ModelPage() {
   };
 
   const handleBasicInput = (
-    field: "name" | "location" | "emailAddress" | "phoneNumber",
+    field: "name" | "location" | "phoneNumber" | "emailAddress",
     value: string
   ): void => {
     setFormData((prev) => ({
@@ -127,17 +127,16 @@ export default function ModelPage() {
     }));
   };
 
-  const handlephoneInput = (field: "phoneNumber", value: string): void => {
-    setphoneFormData((prev) => ({
+  const handleEmailInput = (field: "emailAddress", value: string): void => {
+    setemailFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
   const handleVerificationCode = (index: number, value: string): void => {
-    setphoneFormData((prev) => {
+    setemailFormData((prev) => {
       let codeArray = prev.verificationCode.split("");
 
-      // If value is empty, remove the character
       if (value === "") {
         codeArray[index] = "";
       } else if (/^\d$/.test(value)) {
@@ -167,8 +166,8 @@ export default function ModelPage() {
       FormDataType,
       | "name"
       | "location"
-      | "emailAddress"
       | "phoneNumber"
+      | "emailAddress"
       | "verificationCode"
       | "additionalDetails"
     >
@@ -196,8 +195,8 @@ export default function ModelPage() {
       const formDataToSubmit = new FormData();
       formDataToSubmit.append("name", formData.name);
       formDataToSubmit.append("location", formData.location);
-      formDataToSubmit.append("emailAddress", formData.emailAddress);
-      formDataToSubmit.append("phoneNumber", phoneFormData.phoneNumber);
+      formDataToSubmit.append("phoneNumber", formData.phoneNumber);
+      formDataToSubmit.append("emailAddress", emailFormData.emailAddress);
       const fields = [
         "receptionRooms",
         "cleaningFrequency",
@@ -256,7 +255,7 @@ export default function ModelPage() {
     try {
       setLoading(true);
       const response = await axios.post(`${API_BASE_URL}/api/v1/create-user`, {
-        phoneNumber: phoneFormData.phoneNumber,
+        emailAddress: emailFormData.emailAddress,
       });
 
       if (response.data.success) {
@@ -276,33 +275,70 @@ export default function ModelPage() {
 
   const nextStep = async () => {
     const newErrors: { [key: string]: string } = {};
-    if (step == 4) {
-      try {
-        setLoading(true);
-        const response = await axios.post(
-          `${API_BASE_URL}/api/v1/create-user`,
-          {
-            phoneNumber: phoneFormData.phoneNumber,
-          }
-        );
-
-        if (response.data.success) {
-          toast.success(response.data.message);
-          setLoading(false);
-          setErrors({});
-          setStep(5)
-        }
-      } catch (error) {
-        setLoading(false);
-        const err = error as AxiosError<{ message?: string }>;
-        console.error("Error sending OTP:", err);
-        toast.error(
-          err.response?.data?.message || "An error occurred while sending OTP."
-        );
+    if (step === 1) {
+      if (formData.name.trim().length < 3) {
+        newErrors.name = "Name must be at least 3 characters long.";
+        setErrors(newErrors);
+        return;
+      } else setStep(2);
+    } else if (step === 2) {
+      if (formData.location.trim().length < 3) {
+        newErrors.location = "Location must be at least 3 characters long.";
+        setErrors(newErrors);
+        return;
+      } else setStep(3);
+    } else if (step === 3) {
+      if (formData.phoneNumber.length < 10) {
+        newErrors.phoneNumber = "Phone number must be 10 digits long.";
+        setErrors(newErrors);
+        return;
+      } else {
+        setStep(4);
       }
+    } else if (step == 4) {
+      const validateEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        return emailRegex.test(email);
+      };
+      if (!emailFormData.emailAddress.trim()) {
+        setErrors({ emailAddress: "Email is required." });
+        return;
+      } else if (!validateEmail(emailFormData.emailAddress)) {
+        setErrors({ emailAddress: "Please enter a valid email address." });
+        return;
+      }
+      if(!isVerified){
+        try {
+          setLoading(true);
+          const response = await axios.post(
+            `${API_BASE_URL}/api/v1/create-user`,
+            {
+              emailAddress: emailFormData.emailAddress,
+            }
+          );
+  
+          if (response.data.success) {
+            toast.success(response.data.message);
+            setLoading(false);
+            setErrors({});
+            setStep(5);
+          }
+        } catch (error) {
+          setLoading(false);
+          const err = error as AxiosError<{ message?: string }>;
+          console.error("Error sending OTP:", err);
+          toast.error(
+            err.response?.data?.message || "An error occurred while sending OTP."
+          );
+        }
+      }
+      setErrors({});
+      setStep(5);
+      
+     
     } else if (step === 5) {
       if (!isVerified) {
-        if (phoneFormData.verificationCode.length !== 4) {
+        if (emailFormData.verificationCode.length !== 4) {
           toast.error("Please enter a valid 4-digit OTP.");
           return;
         }
@@ -311,14 +347,14 @@ export default function ModelPage() {
           const response = await axios.post(
             `${API_BASE_URL}/api/v1/verify-otp`,
             {
-              phoneNumber: phoneFormData.phoneNumber,
-              otp: phoneFormData.verificationCode,
+              emailAddress: emailFormData.emailAddress,
+              otp: emailFormData.verificationCode,
             }
           );
 
           if (response.data.success) {
             toast.success(response.data.message);
-            setisVerified(true); // Mark as verified
+            setisVerified(true);
             setStep(6);
           }
         } catch (error) {
@@ -330,9 +366,189 @@ export default function ModelPage() {
           setLoading(false);
         }
       } else {
-        // If already verified, just proceed
         setStep(6);
       }
+    } else if (step === 6) {
+      if (
+        !formData.receptionRooms.selected &&
+        !formData.receptionRooms.showOther
+      ) {
+        setErrors({ receptionRooms: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.receptionRooms.showOther) {
+        if (
+          !formData.receptionRooms.other.trim() ||
+          formData.receptionRooms.other.trim().length < 4
+        ) {
+          setErrors({
+            receptionRoomsOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(7);
+    } else if (step === 7) {
+      if (
+        !formData.cleaningFrequency.selected &&
+        !formData.cleaningFrequency.showOther
+      ) {
+        setErrors({ cleaningFrequency: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.cleaningFrequency.showOther) {
+        if (
+          !formData.cleaningFrequency.other.trim() ||
+          formData.cleaningFrequency.other.trim().length < 4
+        ) {
+          setErrors({
+            cleaningFrequencyOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(8);
+    } else if (step === 8) {
+      if (formData.preferredDays.selected.length === 0) {
+        setErrors({ preferredDays: "Please select at least one day." });
+        return;
+      }
+
+      setErrors({});
+      setStep(9); // Move to next step
+    } else if (step === 9) {
+      if (!formData.bedrooms.selected && !formData.bedrooms.showOther) {
+        setErrors({ bedrooms: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.bedrooms.showOther) {
+        if (
+          !formData.bedrooms.other.trim() ||
+          formData.bedrooms.other.trim().length < 4
+        ) {
+          setErrors({ bedroomsOther: "Please enter at least 4 characters." });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(10);
+    } else if (step === 10) {
+      if (!formData.propertyType.selected && !formData.propertyType.showOther) {
+        setErrors({ propertyType: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.propertyType.showOther) {
+        if (
+          !formData.propertyType.other.trim() ||
+          formData.propertyType.other.trim().length < 4
+        ) {
+          setErrors({
+            propertyTypeOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(11);
+    } else if (step === 11) {
+      if (
+        !formData.hiringDecision.selected &&
+        !formData.hiringDecision.showOther
+      ) {
+        setErrors({ hiringDecision: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.hiringDecision.showOther) {
+        if (
+          !formData.hiringDecision.other.trim() ||
+          formData.hiringDecision.other.trim().length < 4
+        ) {
+          setErrors({
+            hiringDecisionOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(12);
+    } else if (step === 12) {
+      if (
+        !formData.cleaningMaterials.selected &&
+        !formData.cleaningMaterials.showOther
+      ) {
+        setErrors({ cleaningMaterials: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.cleaningMaterials.showOther) {
+        if (
+          !formData.cleaningMaterials.other.trim() ||
+          formData.cleaningMaterials.other.trim().length < 4
+        ) {
+          setErrors({
+            cleaningMaterialsOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(13); // Move to next step
+    } else if (step === 13) {
+      if (
+        !formData.currentCleaner.selected &&
+        !formData.currentCleaner.showOther
+      ) {
+        setErrors({ currentCleaner: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.currentCleaner.showOther) {
+        if (
+          !formData.currentCleaner.other.trim() ||
+          formData.currentCleaner.other.trim().length < 4
+        ) {
+          setErrors({
+            currentCleanerOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(14); // Move to next step
+    } else if (step === 14) {
+      if (!formData.cleaningType.selected && !formData.cleaningType.showOther) {
+        setErrors({ cleaningType: "Please select at least one option." });
+        return;
+      }
+
+      if (formData.cleaningType.showOther) {
+        if (
+          !formData.cleaningType.other.trim() ||
+          formData.cleaningType.other.trim().length < 4
+        ) {
+          setErrors({
+            cleaningTypeOther: "Please enter at least 4 characters.",
+          });
+          return;
+        }
+      }
+
+      setErrors({});
+      setStep(15); // Move to next step
     } else {
       setStep((prev) => Math.min(prev + 1, 15));
     }
@@ -353,7 +569,7 @@ export default function ModelPage() {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
           <Dialog.Content
-            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 sm:p-8 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl"
+            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl"
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
           >
@@ -395,6 +611,9 @@ export default function ModelPage() {
                       errors.name ? "border-red-500" : "border-gray-300"
                     }`}
                     value={formData.name}
+                    onClick={() => {
+                      setErrors((prev) => ({ ...prev, name: "" }));
+                    }}
                     onChange={(e) => handleBasicInput("name", e.target.value)}
                   />
                 </div>
@@ -419,11 +638,14 @@ export default function ModelPage() {
                   <input
                     type="text"
                     required
-                    placeholder="Your Address"
+                    placeholder="Please enter Your Address"
                     className={`p-3 border rounded-md w-full ${
                       errors.location ? "border-red-500" : "border-gray-300"
                     }`}
                     value={formData.location}
+                    onClick={() => {
+                      setErrors((prev) => ({ ...prev, location: "" }));
+                    }}
                     onChange={(e) =>
                       handleBasicInput("location", e.target.value)
                     }
@@ -431,7 +653,55 @@ export default function ModelPage() {
                 </div>
               </>
             )}
+
             {step === 3 && (
+              <>
+                <h2 className="text-xl font-semibold text-gray-800 text-center">
+                  Your number is safe with us
+                </h2>
+                <p className="text-sm text-gray-600 text-center">
+                  Provide your number for a custom quote.
+                </p>
+
+                <div className="mt-4 w-full">
+                  {errors.phoneNumber && (
+                    <p className="text-red-500 text-sm mb-1">
+                      {errors.phoneNumber}
+                    </p>
+                  )}
+
+                  <div className="relative flex items-center">
+                    <span className="absolute left-3 p-3">+44</span>
+                    <input
+                      type="text"
+                      maxLength={10} // Allow up to 10 digits for the phone number
+                      required
+                      placeholder="Pleae Enter Your Phone Number"
+                      className={`p-3 pl-16 border rounded-md w-full ${
+                        errors.phoneNumber
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
+                      value={formData.phoneNumber}
+                      onClick={() => {
+                        setErrors((prev) => ({ ...prev, phoneNumber: "" }));
+                      }}
+                      onChange={(e) => {
+                        // Remove non-numeric characters and restrict to 10 digits
+                        let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                        if (value.length <= 10) {
+                          setFormData((prev) => ({
+                            ...prev,
+                            phoneNumber: value,
+                          }));
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            {step === 4 && (
               <>
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What is Your Email Address?
@@ -454,40 +724,14 @@ export default function ModelPage() {
                     className={`p-3 border rounded-md w-full ${
                       errors.emailAddress ? "border-red-500" : "border-gray-300"
                     }`}
-                    value={formData.emailAddress}
+                    value={emailFormData.emailAddress}
+                    onClick={() => {
+                      setErrors((prev) => ({ ...prev, emailAddress: "" }));
+                    }}
                     onChange={(e) =>
-                      handleBasicInput("emailAddress", e.target.value)
+                      handleEmailInput("emailAddress", e.target.value)
                     }
-                  />
-                </div>
-              </>
-            )}
-
-            {step === 4 && (
-              <>
-                <h2 className="text-xl font-semibold text-gray-800 text-center">
-                  Your number is safe with us
-                </h2>
-                <p className="text-sm text-gray-600 text-center">
-                  Provide your number for a custom quote.
-                </p>
-                <div className="mt-4 w-full">
-                  {errors.phoneNumber && (
-                    <p className="text-red-500 text-sm mb-1">
-                      {errors.phoneNumber}
-                    </p>
-                  )}
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter Your Phone Number"
-                    className={`p-3 border rounded-md w-full ${
-                      errors.phoneNumber ? "border-red-500" : "border-gray-300"
-                    }`}
-                    value={phoneFormData.phoneNumber}
-                    onChange={(e) =>
-                      handlephoneInput("phoneNumber", e.target.value)
-                    }
+                    readOnly={isVerified}
                   />
                 </div>
               </>
@@ -500,7 +744,7 @@ export default function ModelPage() {
                 <p className="text-sm text-gray-600 text-center">
                   {isVerified
                     ? "Phone number verified ✅"
-                    : `Enter the OTP sent to ${phoneFormData.phoneNumber}`}
+                    : `Enter the OTP sent to ${emailFormData.emailAddress}`}
                 </p>
 
                 <div className="flex justify-center space-x-2 mt-4">
@@ -511,11 +755,11 @@ export default function ModelPage() {
                       maxLength={1}
                       required
                       className="w-12 h-12 text-center border-2 border-gray-300 rounded-md bg-gray-100"
-                      value={phoneFormData.verificationCode[index] || ""}
+                      value={emailFormData.verificationCode[index] || ""}
                       onChange={(e) =>
                         handleVerificationCode(index, e.target.value)
                       }
-                      disabled={isVerified} // Disable if already verified
+                      disabled={isVerified}
                     />
                   ))}
                 </div>
@@ -534,7 +778,7 @@ export default function ModelPage() {
                       className="text-blue-500 cursor-pointer hover:underline"
                       onClick={() => setStep(4)}
                     >
-                      Change Number
+                      Change Email
                     </span>
                   </p>
                 )}
@@ -550,23 +794,22 @@ export default function ModelPage() {
                   Includes lounge or dining room.
                 </p>
 
-                <div className="flex flex-col items-start gap-4 mt-4">
-                  {errors.receptionRooms && (
-                    <p className="text-red-500 text-sm mb-1">
-                      {errors.receptionRooms}
-                    </p>
-                  )}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.receptionRooms || errors.receptionRoomsOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.receptionRooms || errors.receptionRoomsOther}
+                  </p>
+                )}
 
+                <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {["0", "1", "2", "3", "4+"].map((option, index) => (
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        className={`h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 ${
-                          errors.receptionRooms
-                            ? "border-red-500"
-                            : "border-gray-400"
-                        }`}
+                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
                         checked={formData.receptionRooms.selected === option}
+                        onClick={() => setErrors({})} // Clear errors when selecting any option
                         onChange={() =>
                           handleOptionSelect("receptionRooms", option)
                         }
@@ -575,11 +818,13 @@ export default function ModelPage() {
                     </label>
                   ))}
 
+                  {/* Other Option */}
                   <label className="flex items-center space-x-2">
                     <input
-                      type="checkbox"
-                      className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500"
+                      type="radio"
+                      className="h-4 w-4 text-blue-500"
                       checked={formData.receptionRooms.showOther}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() =>
                         handleOtherCheckboxChange("receptionRooms")
                       }
@@ -587,16 +832,23 @@ export default function ModelPage() {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
+                  {/* Other Text Field - Only Highlights in Red if Invalid */}
                   {formData.receptionRooms.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`mt-2 p-2 border rounded-md w-full ${
-                        errors.receptionRooms
+                      className={`p-2 border rounded-md w-full ${
+                        errors.receptionRoomsOther
                           ? "border-red-500"
                           : "border-gray-300"
                       }`}
                       value={formData.receptionRooms.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          receptionRoomsOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("receptionRooms", e.target.value)
                       }
@@ -609,22 +861,24 @@ export default function ModelPage() {
             {step === 7 && (
               <>
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
-                  How Often do you need cleaning
+                  How Often do you need cleaning?
                 </h2>
 
                 <p className="text-sm text-gray-600 text-center">
                   Please select how often you need cleaning services.
                 </p>
 
-                <div className="mt-4 w-full">
-                  {/* Show Error Message */}
-                  {errors.cleaningFrequency && (
-                    <p className="text-red-500 text-sm mb-1">
-                      {errors.cleaningFrequency}
-                    </p>
-                  )}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.cleaningFrequency ||
+                  errors.cleaningFrequencyOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.cleaningFrequency || errors.cleaningFrequencyOther}
+                  </p>
+                )}
 
+                <div className="mt-4 w-full">
                   <div className="flex flex-col items-start gap-4 mt-4">
+                    {/* Radio Button Options */}
                     {[
                       "Daily",
                       "Twice a Week",
@@ -638,29 +892,27 @@ export default function ModelPage() {
                         className="flex items-center space-x-2"
                       >
                         <input
-                          type="radio" // Radio button for single select
-                          required
-                          className="h-4 w-4 text-blue-500"
+                          type="radio"
+                          className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
                           checked={
                             formData.cleaningFrequency.selected === option
-                          } // Check if the option is selected
+                          }
+                          onClick={() => setErrors({})} // Clear errors when selecting an option
                           onChange={() =>
                             handleOptionSelect("cleaningFrequency", option)
-                          } // Handle single select
+                          }
                         />
                         <span className="text-sm text-gray-600">{option}</span>
                       </label>
                     ))}
 
-                    {/* "Other" Radio Button */}
+                    {/* Other Option */}
                     <label className="flex items-center space-x-2">
                       <input
-                        type="radio" // Radio button for "Other"
-                        required
+                        type="radio"
                         className="h-4 w-4 text-blue-500"
-                        checked={
-                          formData.cleaningFrequency.selected === "other"
-                        }
+                        checked={formData.cleaningFrequency.showOther}
+                        onClick={() => setErrors({})} // Clear errors when selecting "Other"
                         onChange={() =>
                           handleOtherCheckboxChange("cleaningFrequency")
                         }
@@ -668,18 +920,23 @@ export default function ModelPage() {
                       <span className="text-sm text-gray-600">Other</span>
                     </label>
 
-                    {/* "Other" Input Field */}
+                    {/* Other Text Field - Only Highlights in Red if Invalid */}
                     {formData.cleaningFrequency.showOther && (
                       <input
                         type="text"
-                        required
                         placeholder="Please specify"
-                        className={`mt-2 p-2 border rounded-md w-full ${
-                          errors.cleaningFrequency
+                        className={`p-2 border rounded-md w-full ${
+                          errors.cleaningFrequencyOther
                             ? "border-red-500"
                             : "border-gray-300"
                         }`}
                         value={formData.cleaningFrequency.other}
+                        onClick={() =>
+                          setErrors((prev) => ({
+                            ...prev,
+                            cleaningFrequencyOther: "",
+                          }))
+                        } // Remove error on click
                         onChange={(e) =>
                           handleOtherInput("cleaningFrequency", e.target.value)
                         }
@@ -751,15 +1008,16 @@ export default function ModelPage() {
                   Includes lounge or dining room.
                 </p>
 
-                <div className="mt-4 w-full">
-                  {/* Show Error Message */}
-                  {errors.bedrooms && (
-                    <p className="text-red-500 text-sm mb-1 text-center">
-                      {errors.bedrooms}
-                    </p>
-                  )}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.bedrooms || errors.bedroomsOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.bedrooms || errors.bedroomsOther}
+                  </p>
+                )}
 
+                <div className="mt-4 w-full">
                   <div className="flex flex-col items-start gap-4 mt-4">
+                    {/* Radio Button Options */}
                     {[
                       "0 bedroom",
                       "1 bedroom",
@@ -774,40 +1032,44 @@ export default function ModelPage() {
                         className="flex items-center space-x-2"
                       >
                         <input
-                          type="radio" // Use radio for single selection
-                          required
-                          className="h-4 w-4 text-blue-500"
+                          type="radio"
+                          className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
                           checked={formData.bedrooms.selected === option}
+                          onClick={() => setErrors({})} // Clear errors when selecting an option
                           onChange={() =>
                             handleOptionSelect("bedrooms", option)
-                          } // Handle selection
+                          }
                         />
                         <span className="text-sm text-gray-600">{option}</span>
                       </label>
                     ))}
 
-                    {/* "Other" Checkbox */}
+                    {/* Other Option */}
                     <label className="flex items-center space-x-2">
                       <input
-                        type="radio" // Checkbox for "Other" option
-                        required
+                        type="radio"
                         className="h-4 w-4 text-blue-500"
                         checked={formData.bedrooms.showOther}
+                        onClick={() => setErrors({})} // Clear errors when selecting "Other"
                         onChange={() => handleOtherCheckboxChange("bedrooms")}
                       />
                       <span className="text-sm text-gray-600">Other</span>
                     </label>
 
-                    {/* "Other" Input Field */}
+                    {/* Other Text Field - Only Highlights in Red if Invalid */}
                     {formData.bedrooms.showOther && (
                       <input
                         type="text"
-                        required
                         placeholder="Please specify"
-                        className={`mt-2 p-2 border rounded-md w-full ${
-                          errors.bedrooms ? "border-red-500" : "border-gray-300"
+                        className={`p-2 border rounded-md w-full ${
+                          errors.bedroomsOther
+                            ? "border-red-500"
+                            : "border-gray-300"
                         }`}
                         value={formData.bedrooms.other}
+                        onClick={() =>
+                          setErrors((prev) => ({ ...prev, bedroomsOther: "" }))
+                        } // Remove error on click
                         onChange={(e) =>
                           handleOtherInput("bedrooms", e.target.value)
                         }
@@ -824,14 +1086,15 @@ export default function ModelPage() {
                   What type of property needs cleaning?
                 </h2>
 
-                {/* Show Error Message */}
-                {errors.propertyType && (
-                  <p className="text-red-500 text-sm mb-1 text-center">
-                    {errors.propertyType}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.propertyType || errors.propertyTypeOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.propertyType || errors.propertyTypeOther}
                   </p>
                 )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {[
                     "Bungalow",
                     "Commercial property",
@@ -840,10 +1103,10 @@ export default function ModelPage() {
                   ].map((option, index) => (
                     <label key={index} className="flex items-center space-x-2">
                       <input
-                        type="radio" // Use radio for single selection
-                        required
-                        className="h-4 w-4 text-blue-500"
-                        checked={formData.propertyType.selected === option} // Check if the option is selected
+                        type="radio"
+                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                        checked={formData.propertyType.selected === option}
+                        onClick={() => setErrors({})} // Clear errors when selecting an option
                         onChange={() =>
                           handleOptionSelect("propertyType", option)
                         }
@@ -852,24 +1115,35 @@ export default function ModelPage() {
                     </label>
                   ))}
 
-                  {/* "Other" Checkbox */}
+                  {/* Other Option */}
                   <label className="flex items-center space-x-2">
                     <input
-                      type="radio" // Checkbox for "Other" option
+                      type="radio"
                       className="h-4 w-4 text-blue-500"
                       checked={formData.propertyType.showOther}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() => handleOtherCheckboxChange("propertyType")}
                     />
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                  {/* "Other" Input Field */}
+                  {/* Other Text Field - Only Highlights in Red if Invalid */}
                   {formData.propertyType.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
+                      className={`p-2 border rounded-md w-full ${
+                        errors.propertyTypeOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                       value={formData.propertyType.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          propertyTypeOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("propertyType", e.target.value)
                       }
@@ -885,14 +1159,15 @@ export default function ModelPage() {
                   How Likely are you to make a hiring decision?
                 </h2>
 
-                {/* Show Error Message */}
-                {errors.hiringDecision && (
-                  <p className="text-red-500 text-sm mb-1 text-center">
-                    {errors.hiringDecision}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.hiringDecision || errors.hiringDecisionOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.hiringDecision || errors.hiringDecisionOther}
                   </p>
                 )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {[
                     "I am ready to hire now",
                     "I am definitely going to hire someone",
@@ -903,8 +1178,9 @@ export default function ModelPage() {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        className="h-4 w-4 text-blue-500"
+                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
                         checked={formData.hiringDecision.selected === option}
+                        onClick={() => setErrors({})} // Clear errors when selecting an option
                         onChange={() =>
                           handleOptionSelect("hiringDecision", option)
                         }
@@ -913,13 +1189,13 @@ export default function ModelPage() {
                     </label>
                   ))}
 
-                  {/* "Other" Option */}
+                  {/* Other Option */}
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
-                      required
                       className="h-4 w-4 text-blue-500"
-                      checked={formData.hiringDecision.selected === "other"}
+                      checked={formData.hiringDecision.showOther}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() =>
                         handleOtherCheckboxChange("hiringDecision")
                       }
@@ -927,13 +1203,23 @@ export default function ModelPage() {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                  {/* "Other" Input Field */}
+                  {/* Other Text Field - Only Highlights in Red if Invalid */}
                   {formData.hiringDecision.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
+                      className={`p-2 border rounded-md w-full ${
+                        errors.hiringDecisionOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                       value={formData.hiringDecision.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          hiringDecisionOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("hiringDecision", e.target.value)
                       }
@@ -949,14 +1235,16 @@ export default function ModelPage() {
                   Will you be supplying cleaning materials/equipment?
                 </h2>
 
-                {/* Show Error Message */}
-                {errors.cleaningMaterials && (
-                  <p className="text-red-500 text-sm mb-1 text-center">
-                    {errors.cleaningMaterials}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.cleaningMaterials ||
+                  errors.cleaningMaterialsOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.cleaningMaterials || errors.cleaningMaterialsOther}
                   </p>
                 )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {[
                     "Yes - Cleaning materials and equipment",
                     "Yes - Cleaning materials only",
@@ -965,9 +1253,9 @@ export default function ModelPage() {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        required
                         className="h-4 w-4 text-blue-500"
                         checked={formData.cleaningMaterials.selected === option}
+                        onClick={() => setErrors({})} // Clear errors when selecting any option
                         onChange={() =>
                           handleOptionSelect("cleaningMaterials", option)
                         }
@@ -979,10 +1267,10 @@ export default function ModelPage() {
                   {/* "Other" Option */}
                   <label className="flex items-center space-x-2">
                     <input
-                      type="radio" // Ensure "Other" is a single selection
-                      required
+                      type="radio"
                       className="h-4 w-4 text-blue-500"
                       checked={formData.cleaningMaterials.selected === "other"}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() =>
                         handleOtherCheckboxChange("cleaningMaterials")
                       }
@@ -990,14 +1278,23 @@ export default function ModelPage() {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                  {/* Show Input Field if "Other" is Selected */}
+                  {/* "Other" Text Field - Only Highlights in Red if Invalid */}
                   {formData.cleaningMaterials.showOther && (
                     <input
                       type="text"
-                      required
                       placeholder="Please specify"
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
+                      className={`p-2 border rounded-md w-full ${
+                        errors.cleaningMaterialsOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                       value={formData.cleaningMaterials.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          cleaningMaterialsOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("cleaningMaterials", e.target.value)
                       }
@@ -1013,14 +1310,15 @@ export default function ModelPage() {
                   Do you currently have a cleaner?
                 </h2>
 
-                {/* Show Error Message */}
-                {errors.currentCleaner && (
-                  <p className="text-red-500 text-sm mb-1 text-center">
-                    {errors.currentCleaner}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.currentCleaner || errors.currentCleanerOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.currentCleaner || errors.currentCleanerOther}
                   </p>
                 )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {[
                     "Yes, replacing a current cleaner",
                     "No, previously had a cleaner",
@@ -1029,9 +1327,9 @@ export default function ModelPage() {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        required
                         className="h-4 w-4 text-blue-500"
                         checked={formData.currentCleaner.selected === option}
+                        onClick={() => setErrors({})} // Clear errors when selecting any option
                         onChange={() =>
                           handleOptionSelect("currentCleaner", option)
                         }
@@ -1046,6 +1344,7 @@ export default function ModelPage() {
                       type="radio"
                       className="h-4 w-4 text-blue-500"
                       checked={formData.currentCleaner.selected === "other"}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() =>
                         handleOtherCheckboxChange("currentCleaner")
                       }
@@ -1053,13 +1352,23 @@ export default function ModelPage() {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                  {/* Show Input Field if "Other" is Selected */}
+                  {/* "Other" Text Field - Only Highlights in Red if Invalid */}
                   {formData.currentCleaner.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
+                      className={`p-2 border rounded-md w-full ${
+                        errors.currentCleanerOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                       value={formData.currentCleaner.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          currentCleanerOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("currentCleaner", e.target.value)
                       }
@@ -1075,14 +1384,15 @@ export default function ModelPage() {
                   What type of cleaning would you like?
                 </h2>
 
-                {/* Show Error Message */}
-                {errors.cleaningType && (
-                  <p className="text-red-500 text-sm mb-1 text-center">
-                    {errors.cleaningType}
+                {/* Show Error at the Top for Selection or Other Input Validation */}
+                {(errors.cleaningType || errors.cleaningTypeOther) && (
+                  <p className="text-red-500 text-sm text-center mt-2">
+                    {errors.cleaningType || errors.cleaningTypeOther}
                   </p>
                 )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
+                  {/* Radio Button Options */}
                   {[
                     "Standard cleaning",
                     "Deep cleaning",
@@ -1091,9 +1401,9 @@ export default function ModelPage() {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        required
                         className="h-4 w-4 text-blue-500"
                         checked={formData.cleaningType.selected === option}
+                        onClick={() => setErrors({})}
                         onChange={() =>
                           handleOptionSelect("cleaningType", option)
                         }
@@ -1102,24 +1412,34 @@ export default function ModelPage() {
                     </label>
                   ))}
 
-                  {/* "Other" Option */}
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
-                      required
                       className="h-4 w-4 text-blue-500"
                       checked={formData.cleaningType.selected === "other"}
+                      onClick={() => setErrors({})} // Clear errors when selecting "Other"
                       onChange={() => handleOtherCheckboxChange("cleaningType")}
                     />
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
+                  {/* "Other" Text Field - Only Highlights in Red if Invalid */}
                   {formData.cleaningType.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
+                      className={`p-2 border rounded-md w-full ${
+                        errors.cleaningTypeOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                       value={formData.cleaningType.other}
+                      onClick={() =>
+                        setErrors((prev) => ({
+                          ...prev,
+                          cleaningTypeOther: "",
+                        }))
+                      } // Remove error on click
                       onChange={(e) =>
                         handleOtherInput("cleaningType", e.target.value)
                       }
@@ -1141,9 +1461,8 @@ export default function ModelPage() {
                   Add more details to get faster and more accurate quotes
                 </p>
 
-                {/* Textarea for description */}
                 <textarea
-                  className="mt-2 p-2 w-full h-32 border border-gray-300 rounded-md"
+                  className="mt-2 p-2 w-full h-16 border border-gray-300 rounded-md"
                   placeholder="What would be helpful for the professional to know?"
                   value={formData.additionalDetails.description}
                   onChange={(e) =>
@@ -1151,7 +1470,6 @@ export default function ModelPage() {
                   }
                 />
 
-                {/* File Upload */}
                 <div className="mt-4">
                   <label className="block text-sm font-medium text-gray-600">
                     Upload an image (optional)
