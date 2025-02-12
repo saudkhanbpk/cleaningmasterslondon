@@ -117,7 +117,6 @@ export default function Home() {
 
   return (
     <div className="bg-background">
-      {/* Hero Section */}
       <section
         id="home"
         className="relative h-[600px] flex items-center justify-center text-white"

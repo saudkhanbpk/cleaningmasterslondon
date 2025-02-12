@@ -8,10 +8,9 @@ import axios from "axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 interface emailFormData {
   emailAddress: string;
-  verificationCode: string;
+  verificationCode: string[];
 }
 
 interface FormDataType {
@@ -39,8 +38,11 @@ export default function ModelPage() {
 
   const [emailFormData, setemailFormData] = useState<emailFormData>({
     emailAddress: "",
-    verificationCode: "",
+    verificationCode: ["", "", "", ""],
   });
+  
+
+  console.log("baserurl", API_BASE_URL);
 
   const [formData, setFormData] = useState<FormDataType>({
     name: "",
@@ -133,20 +135,29 @@ export default function ModelPage() {
       [field]: value,
     }));
   };
-  const handleVerificationCode = (index: number, value: string): void => {
-    setemailFormData((prev) => {
-      let codeArray = prev.verificationCode.split("");
 
-      if (value === "") {
-        codeArray[index] = "";
-      } else if (/^\d$/.test(value)) {
-        // Allow only single digits
-        codeArray[index] = value;
+
+const handleVerificationCode = (index: number, value: string) => {
+  setemailFormData((prev) => {
+    const codeArray = [...prev.verificationCode]; 
+
+    if (/^\d$/.test(value)) {
+      codeArray[index] = value;
+
+      if (index < 3 && value !== "") {
+        const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
+        nextInput?.focus();
       }
+    } else if (value === "") {
+      codeArray[index] = "";
+    }
 
-      return { ...prev, verificationCode: codeArray.join("") };
-    });
-  };
+    return { ...prev, verificationCode: codeArray };
+  });
+};
+
+  
+  
 
   const handleAdditionalDetails = (
     field: keyof FormDataType["additionalDetails"],
@@ -254,6 +265,10 @@ export default function ModelPage() {
   const resendOtp = async () => {
     try {
       setLoading(true);
+      setemailFormData((prev) => ({
+        ...prev,
+        verificationCode: ["", "", "", ""], 
+      }));
       const response = await axios.post(`${API_BASE_URL}/api/v1/create-user`, {
         emailAddress: emailFormData.emailAddress,
       });
@@ -297,7 +312,7 @@ export default function ModelPage() {
       }
     } else if (step == 4) {
       const validateEmail = (email: string) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
       };
       if (!emailFormData.emailAddress.trim()) {
@@ -307,7 +322,7 @@ export default function ModelPage() {
         setErrors({ emailAddress: "Please enter a valid email address." });
         return;
       }
-      if(!isVerified){
+      if (!isVerified) {
         try {
           setLoading(true);
           const response = await axios.post(
@@ -316,10 +331,11 @@ export default function ModelPage() {
               emailAddress: emailFormData.emailAddress,
             }
           );
-  
+
           if (response.data.success) {
             toast.success(response.data.message);
             setLoading(false);
+
             setErrors({});
             setStep(5);
           }
@@ -328,34 +344,38 @@ export default function ModelPage() {
           const err = error as AxiosError<{ message?: string }>;
           console.error("Error sending OTP:", err);
           toast.error(
-            err.response?.data?.message || "An error occurred while sending OTP."
+            err.response?.data?.message ||
+              "An error occurred while sending OTP."
           );
         }
       }
       setErrors({});
       setStep(5);
-      
-     
     } else if (step === 5) {
       if (!isVerified) {
-        if (emailFormData.verificationCode.length !== 4) {
+        if (emailFormData.verificationCode.some((digit) => digit === "")) {
           toast.error("Please enter a valid 4-digit OTP.");
           return;
         }
+        
         try {
           setLoading(true);
+
+          
+
           const response = await axios.post(
             `${API_BASE_URL}/api/v1/verify-otp`,
             {
               emailAddress: emailFormData.emailAddress,
-              otp: emailFormData.verificationCode,
+              otp: emailFormData.verificationCode.join(""), // Convert array to string
             }
           );
-
+          
           if (response.data.success) {
             toast.success(response.data.message);
             setisVerified(true);
             setStep(6);
+            setisVerified(true);
           }
         } catch (error) {
           const err = error as AxiosError<{ message?: string }>;
@@ -569,7 +589,7 @@ export default function ModelPage() {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
           <Dialog.Content
-            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl"
+            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl max-h-[530px] overflow-y-auto"
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
           >
@@ -674,7 +694,7 @@ export default function ModelPage() {
                     <span className="absolute left-3 p-3">+44</span>
                     <input
                       type="text"
-                      maxLength={10} // Allow up to 10 digits for the phone number
+                      maxLength={10}
                       required
                       placeholder="Pleae Enter Your Phone Number"
                       className={`p-3 pl-16 border rounded-md w-full ${
@@ -736,54 +756,52 @@ export default function ModelPage() {
                 </div>
               </>
             )}
-            {step === 5 && (
-              <>
-                <h2 className="text-xl font-semibold text-gray-800 text-center">
-                  Confirm Your Phone Number
-                </h2>
-                <p className="text-sm text-gray-600 text-center">
-                  {isVerified
-                    ? "Phone number verified ✅"
-                    : `Enter the OTP sent to ${emailFormData.emailAddress}`}
-                </p>
+           {step === 5 && (
+  <>
+    <h2 className="text-xl font-semibold text-gray-800 text-center">
+      Confirm Your Phone Number
+    </h2>
+    <p className="text-sm text-gray-600 mb-3 text-center">
+      {isVerified
+        ? "Phone number verified ✅"
+        : `Enter the OTP sent to ${emailFormData.emailAddress}`}
+    </p>
+    <div className="flex gap-2 justify-center">
+      {[0, 1, 2, 3].map((index) => (
+        <input
+          key={index}
+          type="text"
+          maxLength={1}
+          className="w-12 h-12 text-center text-lg border border-gray-400 rounded-md"
+          value={emailFormData.verificationCode[index] || ""}
+          onChange={(e) => handleVerificationCode(index, e.target.value)}
+          id={`otp-${index}`}
+          readOnly={isVerified}
+        />
+      ))}
+    </div>
 
-                <div className="flex justify-center space-x-2 mt-4">
-                  {[...Array(4)].map((_, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      maxLength={1}
-                      required
-                      className="w-12 h-12 text-center border-2 border-gray-300 rounded-md bg-gray-100"
-                      value={emailFormData.verificationCode[index] || ""}
-                      onChange={(e) =>
-                        handleVerificationCode(index, e.target.value)
-                      }
-                      disabled={isVerified}
-                    />
-                  ))}
-                </div>
+    {!isVerified && (
+      <p className="text-sm text-gray-600 text-center mt-4">
+        Did not receive a code?{" "}
+        <span
+          onClick={resendOtp}
+          className="text-blue-500 cursor-pointer hover:underline"
+        >
+          Resend
+        </span>{" "}
+        or{" "}
+        <span
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={() => setStep(4)}
+        >
+          Change Email
+        </span>
+      </p>
+    )}
+  </>
+)}
 
-                {!isVerified && (
-                  <p className="text-sm text-gray-600 text-center mt-4">
-                    Did not receive a code?{" "}
-                    <span
-                      onClick={resendOtp}
-                      className="text-blue-500 cursor-pointer hover:underline"
-                    >
-                      Resend
-                    </span>{" "}
-                    or{" "}
-                    <span
-                      className="text-blue-500 cursor-pointer hover:underline"
-                      onClick={() => setStep(4)}
-                    >
-                      Change Email
-                    </span>
-                  </p>
-                )}
-              </>
-            )}
 
             {step === 6 && (
               <>
