@@ -354,6 +354,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <Card className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
+            <p className="mb-6 text-lg">We’d love to hear from you! Reach out to us for any queries or assistance.</p>
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
                   <MapPin className="w-6 h-6 text-primary" />
