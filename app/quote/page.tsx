@@ -54,7 +54,7 @@ export default function Quote() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Get Your Free Cleaning Quote</h1>
           <p className="text-xl text-muted-foreground">
-            Tell us about your cleaning needs and we'll provide a customized quote
+            Tell us about your cleaning needs and we will provide a customized quote
           </p>
         </div>
 

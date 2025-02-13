@@ -1,5 +1,6 @@
 "use client";
-
+import axios from "axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import {
   MapPin,
@@ -21,13 +22,105 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import heroImg from "../assets/Hero.jpg";
 import Link from "next/link";
+import { toast } from "react-toastify";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+
+interface FormData {
+  name: string;
+  phoneNumber: string;
+  email: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  phoneNumber?: string;
+  email?: string;
+  message?: string;
+}
 
 export default function Home() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    phoneNumber: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // 🔹 Field validation function
+  const validateField = (field: keyof FormData, value: string) => {
+    setErrors((prevErrors) => {
+      const newErrors: FormErrors = { ...prevErrors };
+
+      if (field === "name") {
+        newErrors.name = value.trim() ? "" : "Name is required.";
+      }
+
+      if (field === "phoneNumber") {
+        newErrors.phoneNumber =
+          value.length === 10 ? "" : "Phone number must be exactly 10 digits.";
+      }
+
+      if (field === "email") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        newErrors.email = emailRegex.test(value) ? "" : "Enter a valid email.";
+      }
+
+      if (field === "message") {
+        newErrors.message =
+          value.length >= 10 ? "" : "Message must be at least 10 characters.";
+      }
+
+      return newErrors;
+    });
+  };
+
+  // 🔹 Validate all fields before submission
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (formData.phoneNumber.length !== 10)
+      newErrors.phoneNumber = "Phone number must be exactly 10 digits.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      newErrors.email = "Enter a valid email.";
+    if (formData.message.length < 10)
+      newErrors.message = "Message must be at least 10 characters.";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // 🔹 Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/v1/create-contact`, formData);
+
+      if (response.data.success) {
+        toast.success("Message sent successfully!");
+        setFormData({ name: "", phoneNumber: "", email: "", message: "" });
+        setErrors({});
+      } else {
+        toast.error("Failed to send message.");
+      }
+    } catch (error) {
+      const err = error as AxiosError<{ message?: string }>;
+      toast.error(err.response?.data?.message || "Failed to send message.");
+    } finally {
+      setLoading(false);
+    }
+  };
   const services = [
     {
       title: "Residential Cleaning",
@@ -281,27 +374,76 @@ export default function Home() {
               </div>
             </Card>
             <Card className="p-6">
-              <div className="space-y-4">
-                <Input
-                  placeholder="Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <Input
-                  type="email"
-                  placeholder="Your Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Textarea
-                  placeholder="Your Message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="h-32"
-                />
-                <Button className="w-full">Send Message</Button>
-              </div>
-            </Card>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Name Input */}
+        <Input
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, name: e.target.value }))
+          }
+          onBlur={() => validateField("name", formData.name)}
+        />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+
+        {/* Phone Number Input */}
+        <div className="w-full">
+          <div className="mt-4 relative flex items-center">
+            <span className="absolute left-3 p-3">+44</span>
+            <input
+              type="text"
+              maxLength={10}
+              placeholder="Enter Your Phone Number"
+              className={`p-3 pl-16 border rounded-md w-full ${
+                errors.phoneNumber ? "border-red-500" : "border-gray-300"
+              }`}
+              value={formData.phoneNumber}
+              onChange={(e) => {
+                let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                if (value.length <= 10) {
+                  setFormData((prev) => ({ ...prev, phoneNumber: value }));
+                }
+              }}
+              onBlur={() => validateField("phoneNumber", formData.phoneNumber)}
+            />
+          </div>
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-sm">{errors.phoneNumber}</p>
+          )}
+        </div>
+
+        {/* Email Input */}
+        <Input
+          type="email"
+          placeholder="Your Email"
+          value={formData.email}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, email: e.target.value }))
+          }
+          onBlur={() => validateField("email", formData.email)}
+        />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
+        {/* Message Input */}
+        <Textarea
+          placeholder="Your Message"
+          value={formData.message}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, message: e.target.value }))
+          }
+          className="h-32"
+          onBlur={() => validateField("message", formData.message)}
+        />
+        {errors.message && (
+          <p className="text-red-500 text-sm">{errors.message}</p>
+        )}
+
+        {/* Submit Button */}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Sending..." : "Send Message"}
+        </Button>
+      </form>
+    </Card>
           </div>
         </div>
       </section>
