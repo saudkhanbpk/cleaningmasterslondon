@@ -1519,8 +1519,8 @@ const handleVerificationCode = (index: number, value: string) => {
                         formData.additionalDetails.image
                       )}
                       alt="Uploaded preview"
-                      width={100} // Set the width (adjust as needed)
-                      height={100} // Set the height (adjust as needed)
+                      width={100} 
+                      height={100} 
                       className="mt-2 max-w-full h-auto rounded-md border"
                     />
                   </div>
