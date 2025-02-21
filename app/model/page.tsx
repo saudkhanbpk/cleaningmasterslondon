@@ -1,5 +1,8 @@
 "use client";
 import { useState } from "react";
+import { useEffect } from 'react';
+import AOS from 'aos';
+import "aos/dist/aos.css";
 import * as Dialog from "@radix-ui/react-dialog";
 import { XIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/navigation";
@@ -42,7 +45,6 @@ export default function ModelPage() {
   });
   
 
-  console.log("baserurl", API_BASE_URL);
 
   const [formData, setFormData] = useState<FormDataType>({
     name: "",
@@ -60,6 +62,10 @@ export default function ModelPage() {
     cleaningType: { selected: "", other: "", showOther: false },
     additionalDetails: { description: "", image: null },
   });
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   const handleMultipleSelect = (
     section: keyof Pick<FormDataType, "preferredDays">,
@@ -588,7 +594,7 @@ const handleVerificationCode = (index: number, value: string) => {
       >
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
-          <Dialog.Content
+          <Dialog.Content 
             className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl max-h-[530px] overflow-y-auto"
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
@@ -596,7 +602,7 @@ const handleVerificationCode = (index: number, value: string) => {
             <div className="flex justify-between items-center mb-6">
               <div className="w-full bg-gray-200 h-3 rounded-full text-center">
                 <div
-                  className="bg-blue-500 h-3 border border-blue-700"
+                  className="bg-purple-700 h-3 border border-purple-800"
                   style={{ width: `${(step / 15) * 100}%` }}
                 />
               </div>
@@ -610,7 +616,7 @@ const handleVerificationCode = (index: number, value: string) => {
               </Dialog.Close>
             </div>
             {step === 1 && (
-              <>
+               <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What is Your Name?
                 </h2>
@@ -637,11 +643,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     onChange={(e) => handleBasicInput("name", e.target.value)}
                   />
                 </div>
-              </>
+                </div>
             )}
 
             {step === 2 && (
-              <>
+             <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Where do you need the cleaner?
                 </h2>
@@ -671,11 +677,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     }
                   />
                 </div>
-              </>
+              </div>
             )}
 
             {step === 3 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Your number is safe with us
                 </h2>
@@ -719,10 +725,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   </div>
                 </div>
-              </>
+              </div>
             )}
             {step === 4 && (
-              <>
+             <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What is Your Email Address?
                 </h2>
@@ -754,10 +760,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     readOnly={isVerified}
                   />
                 </div>
-              </>
+              </div>
             )}
            {step === 5 && (
-  <>
+  <div data-aos="flip-left" data-aos-duration="1500">
     <h2 className="text-xl font-semibold text-gray-800 text-center">
       Confirm Your Phone Number
     </h2>
@@ -799,13 +805,13 @@ const handleVerificationCode = (index: number, value: string) => {
         </span>
       </p>
     )}
-  </>
+  </div>
 )}
 
 
             {step === 6 && (
-              <>
-                <h2 className="text-xl font-semibold text-gray-800 text-center">
+              <div data-aos="flip-left" data-aos-duration="1500">
+                  <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How many reception rooms need cleaning?
                 </h2>
                 <p className="text-sm text-gray-600 text-center">
@@ -873,11 +879,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {step === 7 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How Often do you need cleaning?
                 </h2>
@@ -962,11 +968,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     )}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {step === 8 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   When are the best days for cleaning?
                 </h2>
@@ -1014,11 +1020,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     ))}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {step === 9 && (
-              <>
+               <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How many bedroom(s) need cleaning?
                 </h2>
@@ -1095,11 +1101,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     )}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {step === 10 && (
-              <>
+               <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What type of property needs cleaning?
                 </h2>
@@ -1168,11 +1174,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {step === 11 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How Likely are you to make a hiring decision?
                 </h2>
@@ -1244,11 +1250,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {step === 12 && (
-              <>
+               <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Will you be supplying cleaning materials/equipment?
                 </h2>
@@ -1319,11 +1325,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+                </div>
             )}
 
             {step === 13 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Do you currently have a cleaner?
                 </h2>
@@ -1393,11 +1399,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {step === 14 && (
-              <>
+                <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What type of cleaning would you like?
                 </h2>
@@ -1464,11 +1470,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-              </>
+                </div>
             )}
 
             {step === 15 && (
-              <>
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <p className="text-center text-green-600">
                   We have posted your request
                 </p>
@@ -1525,7 +1531,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   </div>
                 )}
-              </>
+              </div>
             )}
             <div className="mt-8 flex justify-between space-x-4">
               {step > 1 ? (
@@ -1582,7 +1588,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 </button>
               ) : step < 15 ? (
                 <button
-                  className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center justify-center"
+                  className="px-6 py-3 bg-purple-700 text-white rounded-md hover:bg-purple-800 flex items-center justify-center"
                   onClick={nextStep}
                   disabled={loading}
                 >

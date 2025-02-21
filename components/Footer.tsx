@@ -6,62 +6,60 @@ export default function Footer() {
 
   return (
 
-    <footer className="bg-secondary/20 border-t">
+    <footer className="bg-purple-700 text-white border-t">
     <div className="container mx-auto px-4 py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Brand */}
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <Sparkles className="h-6 w-6 text-primary" />
+            <Sparkles className="h-6 w-6 text-white" />
             <span className="text-xl font-bold">CleanPro</span>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Professional cleaning services for homes and businesses. Quality service guaranteed.
           </p>
         </div>
 
         {/* Quick Links */}
-        <div>
+        <div className="text-white">
           <h3 className="font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2">
-            <li><a href="/" className="text-muted-foreground hover:text-foreground">Home</a></li>
-            <li><a href="/reviews" className="text-muted-foreground hover:text-foreground">Reviews</a></li>
-            <li><a href="/blog" className="text-muted-foreground hover:text-foreground">Blog</a></li>
-            <li><a href="/#contact" className="text-muted-foreground hover:text-foreground">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/reviews">Reviews</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
-
-        {/* Services */}
-        <div>
+        <div className="text-white">
           <h3 className="font-semibold mb-4">Our Services</h3>
           <ul className="space-y-2">
-            <li><a href="/services/residential" className="text-muted-foreground hover:text-foreground">Residential Cleaning</a></li>
-            <li><a href="/services/residential" className="text-muted-foreground hover:text-foreground">Regular Cleaning</a></li>
-            <li><a href="/services/residential" className="text-muted-foreground hover:text-foreground">Move-In/Move-Out Cleaning</a></li>
-            <li><a href="/services/deep-cleaning" className="text-muted-foreground hover:text-foreground">Deep Cleaning</a></li>
+            <li><a href="/services/residential">Residential Cleaning</a></li>
+            <li><a href="/services/residential">Regular Cleaning</a></li>
+            <li><a href="/services/residential">Move-In/Move-Out Cleaning</a></li>
+            <li><a href="/services/deep-cleaning">Deep Cleaning</a></li>
           </ul>
         </div>
 
         {/* Contact */}
-        <div>
+        <div className="text-white">
           <h3 className="font-semibold mb-4">Contact Us</h3>
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <Mail className="h-4 w-4 text-primary" />
-              <span className="text-muted-foreground">contact@cleanpro.com</span>
+              <Mail className="h-4 w-4" />
+              <span>contact@cleanpro.com</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Phone className="h-4 w-4 text-primary" />
-              <span className="text-muted-foreground">(555) 123-4567</span>
+              <Phone className="h-4 w-4" />
+              <span>(555) 123-4567</span>
             </div>
             <div className="flex space-x-4 mt-4">
-              <a href="#" className="text-muted-foreground hover:text-foreground">
+              <a href="#">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground">
+              <a href="#">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground">
+              <a href="#">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
@@ -69,7 +67,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
+      <div className="border-t mt-12 pt-8 text-center text-white">
         <p>&copy; {currentYear} CleanPro. All rights reserved.</p>
       </div>
     </div>
