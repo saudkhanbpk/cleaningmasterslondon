@@ -1,8 +1,11 @@
 "use client"
 import { motion } from "framer-motion";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import Image from "next/image";
+import { FaStar } from "react-icons/fa";
 import {
-  Star,
   CheckCircle2,
   Sparkles,
   Shield,
@@ -14,6 +17,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import heroImg from "../assets/Hero.jpg";
+import Client1 from "../assets/Client1.jpeg";
+import Client2 from "../assets/Client2.jpg";
+import Client3 from "../assets/Client3.jpeg";
 import Link from "next/link";
 
 export default function Home() {
@@ -39,21 +45,51 @@ export default function Home() {
     },
     {
       title: "Specialized Services",
-      description:  "Comprehensive home cleaning services tailored to your needs",
+      description: "Comprehensive home cleaning services tailored to your needs",
       image:
         "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&q=80&w=400",
     },
   ];
 
+  const sliderSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   const testimonials = [
     {
+      id: 1,
+      image: Client1,
       name: "Sarah Johnson",
       role: "Homeowner",
+
       comment:
         "The best cleaning service I've ever used. Professional.",
       rating: 5,
     },
     {
+      id: 2,
+      image: Client2,
       name: "Michael Chen",
       role: "Business Owner",
       comment:
@@ -61,6 +97,8 @@ export default function Home() {
       rating: 5,
     },
     {
+      id: 3,
+      image: Client3,
       name: "Emily Davis",
       role: "Property Manager",
       comment: "Friendly staff and outstanding results. Highly recommended!",
@@ -142,7 +180,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <motion.h2
-              className="text-3xl font-bold mb-4"
+              className="text-3xl text-purple-700 font-bold mb-4"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -151,7 +189,7 @@ export default function Home() {
               Why Choose CleanPro
             </motion.h2>
             <motion.p
-              className="text-muted-foreground"
+              className="text-gray-600"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -170,15 +208,16 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <Card className="p-6 hover:shadow-lg transition-shadow h-[200px] bg-gray-200 text-gray-800">
+                <Card className="p-6 hover:shadow-lg transition-shadow h-[200px] bg-gradient-to-r from-purple-500 to-blue-500 text-white">
                   <div className="flex flex-col items-center text-center">
-                    <div className="mb-4">{feature.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                    <div className="">{feature.icon}</div>
+                    <h3 className="text-xl font-semibold mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p>{feature.description}</p>
                   </div>
                 </Card>
+
               </motion.div>
             ))}
           </div>
@@ -193,12 +232,12 @@ export default function Home() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-4">Our Services</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-3xl font-bold mb-4 text-purple-700">Our Services</h2>
+            <p className="text-gray-600">
               We offer a comprehensive range of cleaning services to meet all
               your needs
-            </p>  
-          </motion.div> 
+            </p>
+          </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {services.map((service, index) => (
               <motion.div
@@ -213,17 +252,17 @@ export default function Home() {
                     <Image
                       src={service.image}
                       alt={service.title}
-                      width={400} 
+                      width={400}
                       height={192}
                       className="w-full h-48 object-cover transition-transform group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">
+                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-gray-600 mb-4">
                       {service.description}
                     </p>
                     <Button
@@ -243,51 +282,45 @@ export default function Home() {
       <section id="testimonials" className="py-10 bg-secondary/20">
         <div className="container mx-auto px-4">
           <motion.div
-            className="max-w-2xl mx-auto text-center mb-12"
+            className="max-w-2xl mx-auto text-center mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-muted-foreground">
-              Do not just take our word for it - hear from our satisfied
-              customers
+            <h2 className="text-3xl text-purple-700 font-bold mb-4">What Our Clients Say</h2>
+            <p className="text-gray-600">
+              Do not just take our word for it - hear from our satisfied customers
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <Slider {...sliderSettings} className="w-[325px] md:w-auto">
             {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <Card className="p-6  bg-gray-200 text-gray-800">
-                  <div className="flex mb-4 ">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-5 h-5 text-yellow-400 fill-yellow-400 text-primary"
-                      />
-                    ))}
-                  </div>
-                  <p className="mb-4 text-muted-foreground">
-                    {testimonial.comment}
-                  </p>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </Card>
-              </motion.div>
+              <div key={testimonial.id} className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl flex flex-col items-center text-center">
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src={testimonial.image}
+                    alt={`Customer ${testimonial.name}`}
+                    className="object-cover rounded-full border-4 border-purple-700 w-20 h-20"
+                  />
+                </div>
+                <div className="flex mb-4 justify-center">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <FaStar key={i} className="text-yellow-400 w-5 h-5" />
+                  ))}
+                </div>
+                <p className="mb-4">{testimonial.comment}</p>
+                <div className="font-bold">
+                  <p className="pt-2">{testimonial.role}</p>
+                  <p className="pt-2">{testimonial.name}</p>
+                </div>
+              </div>
             ))}
-          </div>
+          </Slider>
         </div>
       </section>
+
+
     </div>
   );
 }
