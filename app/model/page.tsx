@@ -10,6 +10,7 @@ import Image from "next/image";
 import axios from "axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import bgimage from "../../assets/cleaning2.jpeg"
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface emailFormData {
   emailAddress: string;
@@ -593,7 +594,7 @@ const handleVerificationCode = (index: number, value: string) => {
         }}
       >
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50" />
+          <Dialog.Overlay className="fixed inset-0"  style={{ backgroundImage: `url(${bgimage.src})`, backgroundSize: 'cover',  backgroundPosition: 'center' }}  />
           <Dialog.Content 
             className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl max-h-[530px] overflow-y-auto"
             onPointerDownOutside={(e) => e.preventDefault()}
@@ -1151,7 +1152,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                  {/* Other Text Field - Only Highlights in Red if Invalid */}
+                
                   {formData.propertyType.showOther && (
                     <input
                       type="text"

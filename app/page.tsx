@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
+import { useEffect } from "react";
 import {
   CheckCircle2,
   Sparkles,
@@ -21,8 +22,17 @@ import Client1 from "../assets/Client1.jpeg";
 import Client2 from "../assets/Client2.jpg";
 import Client3 from "../assets/Client3.jpeg";
 import Link from "next/link";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
 
 export default function Home() {
+  useEffect(() => {
+    AOS.init({
+      duration: 2000, 
+    });
+  }, []);
   const services = [
     {
       title: "Residential Cleaning",
@@ -144,7 +154,7 @@ export default function Home() {
 
   return (
     <div className="bg-background">
-      <motion.section
+     <motion.section
         id="home"
         className="relative h-[600px] flex items-center justify-center text-white"
         initial={{ opacity: 0 }}
@@ -169,11 +179,26 @@ export default function Home() {
           <p className="text-xl mb-8">
             Professional cleaning services for homes and businesses
           </p>
-          <Link href="model">
-            <Button size="lg" className="bg-purple-700 hover:bg-purple-800 text-white">
-              Get a Custom Quote
-            </Button>
-          </Link>
+          <div className="flex justify-center space-x-4">
+            <Link href="model">
+              <Button
+                size="lg"
+                className="bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl"
+                data-aos="fade-right"
+              >
+                Book your Clean
+              </Button>
+            </Link>
+            <Link href="contact">
+              <Button
+                size="lg"
+                className="bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl"
+                data-aos="fade-left"
+              >
+                Contact Us
+              </Button>
+            </Link>
+          </div>
         </motion.div>
       </motion.section>
       <section className="py-10 bg-secondary/10">
@@ -217,7 +242,6 @@ export default function Home() {
                     <p>{feature.description}</p>
                   </div>
                 </Card>
-
               </motion.div>
             ))}
           </div>
@@ -294,7 +318,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <Slider {...sliderSettings} className="w-[325px] md:w-auto">
+          <Slider {...sliderSettings}>
             {testimonials.map((testimonial, index) => (
               <div key={testimonial.id} className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl flex flex-col items-center text-center">
                 <div className="flex justify-center mb-4">
