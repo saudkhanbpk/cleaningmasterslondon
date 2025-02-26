@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Services", dropdown: true }, // No href for Services tab
+    { label: "Services", dropdown: true }, 
     { label: "Reviews", href: "/reviews" },
     { label: "Blog", href: "/blog" },
     { label: "Quote", href: "/quote" },
@@ -40,7 +40,6 @@ export default function Navbar() {
     { label: "Domestic Cleaning", href: "/services/domestic-cleaning" },
     { label: "End of Tenancy", href: "/services/end-of-tenancy" },
     { label: "Carpet Cleaning", href: "/services/carpet-cleaning" },
-    { label: "Handyman", href: "/services/handyman" },
     { label: "Office Cleaning", href: "/services/office-cleaning" },
     { label: "Window Cleaning", href: "/services/window-cleaning" },
     { label: "Gardening", href: "/services/gardening" },
@@ -66,7 +65,7 @@ export default function Navbar() {
                 onMouseEnter={() => setIsServicesHovered(true)}
                 onMouseLeave={() => setIsServicesHovered(false)}
               >
-                {/* Services Tab (Not Clickable, Just Opens Dropdown) */}
+                
                 <button
                   className={`text-white text-lg rounded-full py-2 px-4 flex items-center cursor-default ${
                     isServicesPage ? "bg-purple-800 text-white" : "hover:bg-purple-800"
@@ -76,7 +75,7 @@ export default function Navbar() {
                   <ChevronDown className="h-4 w-4 ml-1" />
                 </button>
 
-                {/* Services Dropdown */}
+             
                 {isServicesHovered && (
                   <div className="absolute left-0 text-lg w-60 bg-purple-700 text-white rounded-lg shadow-lg">
                     {services.map((service) => (
@@ -124,7 +123,7 @@ export default function Navbar() {
               <div key={item.label}>
                 {item.dropdown ? (
                   <>
-                    {/* Services Button (Not a Link) */}
+                    
                     <button
                       className={`text-white text-lg font-semibold py-2 px-4 ${
                         isServicesPage ? "bg-purple-800 text-white" : "hover:bg-purple-800"
