@@ -24,40 +24,63 @@ import Client3 from "@/assets/Client3.jpeg";
 import Link from "next/link";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useRouter } from "next/navigation";
+import bubbleimage from "@/assets/buble.png";
 
 export default function Home() {
   useEffect(() => {
     AOS.init({
-      duration: 2000, 
+      duration: 2000,
     });
   }, []);
+
+  const router = useRouter();
   const services = [
     {
-      title: "Residential Cleaning",
+      title: "Domestic Cleaning",
+      slug: "domestic-cleaning",
       description:
-        "Comprehensive home cleaning services tailored to your needs",
-      image:
-        "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=400",
+        "Keep your home spotless with expert cleaning services. We handle dusting, deep cleaning, and sanitation to create a fresh, hygienic living space. Enjoy a cleaner, healthier home without hassle.",
+      image: require("@/assets/domesticCleaning.jpg"),
     },
     {
-      title: "Commercial Cleaning",
-      description: "Comprehensive home cleaning services tailored to your needs",
-      image:
-        "https://images.unsplash.com/photo-1613323593608-abc90fec84ff?auto=format&fit=crop&q=80&w=400",
+      title: "End of Tenancy",
+      slug: "end-of-tenancy",
+      description:
+        "Moving out? We ensure your place looks new with thorough scrubbing, sanitizing, and polishing. Get top-quality cleaning to secure your deposit and leave your home spotless and stress-free.",
+      image: require("@/assets/tenancyClening/hero.jpg"),
     },
     {
-      title: "Deep Cleaning",
-      description: "Comprehensive home cleaning services tailored to your needs",
-      image:
-        "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&q=80&w=400",
+      title: "Carpet Cleaning",
+      slug: "carpet-cleaning",
+      description:
+        "Refresh your carpets with deep-cleaning solutions. We remove stains, dirt, and allergens using eco-friendly methods. Restores carpet softness, beauty, and ensures a healthy environment",
+      image: require("@/assets/carpet/hero.jpeg"),
     },
     {
-      title: "Specialized Services",
-      description: "Comprehensive home cleaning services tailored to your needs",
-      image:
-        "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&q=80&w=400",
+      title: "Office Cleaning",
+      slug: "office-cleaning",
+      description:
+        "A clean office boosts productivity and professionalism. Our service keeps workspaces sanitized and tidy. From desks to common areas, we create a spotless, inviting environment for employees and clients.",
+      image: require("@/assets/cleaning3.jpg"),
+    },
+    {
+      title: "Window Cleaning",
+      slug: "window-cleaning",
+      description:
+        "Let sunshine in with professional window cleaning. We eliminate dirt, streaks, and smudges for crystal-clear glass. Enjoy brighter, cleaner windows with our safe, efficient, and streak-free cleaning techniques.",
+      image: require("@/assets/window/hero.jpg"),
+    },
+    {
+      title: "Gardening Cleaning",
+      slug: "gardening",
+      description:
+        "Enhance your garden with expert cleaning. We remove debris, trim overgrowth, and restore outdoor spaces. A well-kept garden boosts relaxation, aesthetics, and curb appeal. Enjoy a fresh, tidy landscape.",
+      image: require("@/assets/gardening/hero.jpg"),
     },
   ];
+  
+  
 
   const sliderSettings = {
     infinite: true,
@@ -151,8 +174,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-background">
-     <motion.section
+    <div className="bg-background overflow-hidden">
+      <motion.section
         id="home"
         className="relative h-[600px] flex items-center justify-center text-white"
         initial={{ opacity: 0 }}
@@ -166,7 +189,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <motion.div
-          className="relative z-10 text-center max-w-4xl mx-auto px-4"
+          className="relative z-10 text-center max-w-4xl px-4"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -199,6 +222,64 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.section>
+      <section id="services" className="py-10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="max-w-2xl mx-auto text-center mb-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl font-bold mb-4 text-purple-700">Our Services</h2>
+            <p className="text-gray-600">
+              We offer a comprehensive range of cleaning services to meet all
+              your needs
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+              >
+                <Card className="overflow-hidden group text-black">
+                  <div className="relative">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      width={400}
+                      height={192}
+                      className="w-full h-48 object-cover transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {service.description}
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="w-full group bg-purple-700 hover:bg-purple-800 text-white hover:text-white"
+                      onClick={() => router.push(`/services/${service.slug}`)}
+                    >
+                      Learn More
+                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-10 bg-secondary/10">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-12">
@@ -245,62 +326,45 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="services" className="py-10">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="max-w-2xl mx-auto text-center mb-12"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-4 text-purple-700">Our Services</h2>
-            <p className="text-gray-600">
-              We offer a comprehensive range of cleaning services to meet all
-              your needs
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <Card className="overflow-hidden group text-black">
-                  <div className="relative">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
-                    </p>
-                    <Button
-                      variant="outline"
-                      className="w-full group bg-purple-700 hover:bg-purple-800 text-white hover:text-white"
-                    >
-                      Learn More
-                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+      <section>
+        <div className=" text-center">
+          <h1 className="font-bold text-3xl text-purple-700">Three Steps to a Cleaner Home</h1>
+          <p className="text-gray-700 text-2xl">…easy as 1-2-3</p></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center px-4 md:px-16 py-10">
+          {/* Step 1 */}
+          <div className="flex flex-col items-center">
+            <div className="relative">
+              <img src={bubbleimage.src} alt="Step 1" className="w-32 h-32" />
+              <span className="absolute inset-0 flex items-center justify-center text-purple-700 text-6xl font-bold">1</span>
+            </div>
+            <h3 className="text-purple-700 font-bold mt-4 text-xl">Book in Seconds</h3>
+            <p className="text-gray-700 text-sm">Quick and easy online scheduling.</p>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col items-center">
+            <div className="relative">
+              <img src={bubbleimage.src} alt="Step 2" className="w-32 h-32" />
+              <span className="absolute inset-0 flex items-center justify-center text-purple-700 text-6xl font-bold">2</span>
+            </div>
+            <h3 className="text-purple-700 font-bold mt-4 text-xl">Expert Care, Every Time</h3>
+            <p className="text-gray-700 text-sm">We clean with precision and eco-friendly products.</p>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex flex-col items-center">
+            <div className="relative">
+              <img src={bubbleimage.src} alt="Step 3" className="w-32 h-32" />
+              <span className="absolute inset-0 flex items-center justify-center text-purple-700 text-6xl font-bold">3</span>
+            </div>
+            <h3 className="text-purple-700 font-bold mt-4 text-xl">Relax in a Spotless Home</h3>
+            <p className="text-gray-700 text-sm">Enjoy a clean space without lifting a finger.</p>
           </div>
         </div>
       </section>
+
+      <div className="border-t border-gray-300 mx-8"></div>
+
       <section id="testimonials" className="py-10 bg-secondary/20">
         <div className="container mx-auto px-4">
           <motion.div
@@ -341,8 +405,17 @@ export default function Home() {
           </Slider>
         </div>
       </section>
-
-
+      <div className="py-6 text-gray-100 text-center">
+      <Link href="/model">
+        <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
+          Book Cleaning Today
+        </button>
+        </Link>
+        <div className="mt-2 text-sm text-gray-100">
+          <p className="text-gray-700 container px-10 lg:px-40">We’re your trusted local cleaning experts, dedicated to providing thorough and reliable service every time.
+            Call for a Free Estimate today! CityHousekeeping is ready to make your home shine: 020-33-22-23-23.</p>
+        </div>
+      </div>
     </div>
   );
 }

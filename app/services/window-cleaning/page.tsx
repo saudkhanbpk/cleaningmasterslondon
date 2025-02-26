@@ -1,176 +1,176 @@
 "use client";
-import heroImg from "@/assets/domesticCleaning.jpg";
+import heroImg from "@/assets/window/hero.jpg";
+import heroimg1 from "@/assets/window/hero1.jpg";
+import company1 from "@/assets/window/comp1.png"
+import company2 from "@/assets/window/comp2.png"
+import company3 from "@/assets/window/comp3.png"
+import company4 from "@/assets/window/comp4.png"
+import company5 from "@/assets/window/comp5.png"
+import company6 from "@/assets/window/comp6.png"
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
+import { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
+
 import Image from "next/image";
 import { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+const faqData = [
+    { question: "What types of properties do you service for window cleaning?", answer: "We clean residential, commercial, and high-rise properties." },
+    { question: "How do you ensure safety when cleaning windows on higher floors?", answer: "Our team uses safety harnesses, professional-grade equipment, and follows industry standards to ensure safety." },
+    { question: "What cleaning methods do you use?", answer: "We use purified water, eco-friendly cleaning solutions, and advanced techniques to achieve streak-free results." },
+    { question: "How often should I have my windows cleaned?", answer: "For residential properties, we recommend cleaning every 3-6 months, while commercial properties benefit from monthly or bi-weekly cleaning." },
+    { question: "Can you clean windows in any weather?", answer: "We can clean in most weather conditions, but heavy rain or storms may require rescheduling for safety reasons." },
+    { question: "Do you use environmentally friendly cleaning products?", answer: "Yes, we use eco-friendly and biodegradable cleaning solutions to ensure safety for you and the environment." },
+    { question: "What is your pricing structure?", answer: "Our pricing is based on the number of windows, property size, and level of difficulty. Contact us for a quote." },
+    { question: "Do I need to be present during the window cleaning service?", answer: "No, as long as we have access to the windows, you do not need to be present." },
+    { question: "How do I schedule a service?", answer: "You can schedule a service by calling us, visiting our website, or booking through our online portal." },
+    { question: "What is your cancellation or rescheduling policy?", answer: "We require a 24-hour notice for cancellations or rescheduling to avoid any fees." },
+];
 export default function windowCleaning() {
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1500, 
-    });
-  }, []);
-  const services = [
-    {
-      title: "One-Off Cleaning",
-      price: "Starting from £19.85/hour",
-      description: "Perfect for spring cleaning or preparing your home for guests, this service provides a thorough clean, customized to your needs. No hidden fees and professional results every time.",
-      image: require("../../../assets/deepCleaning/1.jpg"),
-    },
-    {
-      title: "Regular Cleaning",
-      price: "Starting from £27.85/hour",
-      description: "Whether you need weekly, fortnightly, or monthly cleaning, we’ll assign the same cleaner every time, so they get to know your preferences and deliver consistent results.",
-      image: require("../../../assets/deepCleaning/2.jpg"),
-    },
-    {
-      title: "End of Tenancy Cleaning",
-      price: "Starting from £22.50/hour",
-      description: "Ensure your property is in top condition before moving out. Our experienced team will arrive quickly and get the job done, ensuring you meet your landlord’s cleaning expectations.",
-      image: require("../../../assets/deepCleaning/3.jpg"),
-    },
-    {
-      title: "Deep Cleaning",
-      price: "Starting from £25.50/hour",
-      description: "Need a more thorough clean? Our deep cleaning service tackles those hard-to-reach places and ensures your home feels fresh and spotless.",
-      image: require("../../../assets/deepCleaning/4.jpg"),
-    },
-    {
-      title: "After Party Cleaning",
-      price: "Starting from £28/hour",
-      description: "Had a big night? Don’t worry—our after-party cleaning specialists will have your place back to normal in no time. Let us take care of the mess while you relax.",
-      image: require("../../../assets/deepCleaning/5.jpg"),
-    },
-    {
-      title: "Ironing Service",
-      price: "Starting from £24.50/hour",
-      description: "We not only clean your home but also offer professional ironing services to keep your wardrobe looking sharp. Our dependable staff ensures your clothes are well taken care of.",
-      image: require("../../../assets/deepCleaning/7.jpg"),
-    },
-  ];
-  return (
-    <div>
-      <div className="relative">
-        <div
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage: `url(${heroImg.src})`,
-            height: "300px",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-5xl z-10"  data-aos="fade-right">
-          Domestic Cleaning
-        </h1>
-      </div>
-      <div className="container px-10 py-4">
-        <h1 className="text-purple-700 text-2xl mt-80">
-          Book Now and Get a 10% Discount on your first domestic cleaning, when you book regular cleaning (Weekly, Fortnightly, or Monthly). (First booking only)
-        </h1>
-        <p className="py-6">At City Housekeeping, we understand that a clean home is a happy home. That's why our domestic cleaning services are designed to meet your every need, ensuring a pristine environment without the hassle. Our experienced and trustworthy cleaners specialize in delivering top-notch home cleaning services that not only meet but exceed your expectations.</p>
+    const [openIndex, setOpenIndex] = useState(null);
 
-        <h1 className="text-purple-700 text-2xl">
-          Why Choose cleaningMasterLondon for Domestic Cleaning?
-        </h1>
+    const toggleFAQ = (index: any) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+    useEffect(() => {
+        AOS.init({
+            duration: 1500,
+        });
+    }, []);
+    return (
+        <div>
+            <div className="relative">
+                <div
+                    className="absolute inset-0 bg-cover"
+                    style={{
+                        backgroundImage: `url(${heroImg.src})`,
+                        height: "300px",
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                </div>
+                <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-5xl z-10" data-aos="fade-right">
+                    Window Cleaning
+                </h1>
+            </div>
+            <div className="container px-10 py-4">
 
-        {/* Bullet Points for Benefits */}
-        <ul className="py-6 list-disc pl-8 text-gray-600">
-          <li>
-            <span className="font-bold">Professional and Experienced Cleaners:</span> Our trained professionals have extensive housekeeping experience to ensure your home is in safe hands.
-          </li>
-          <li>
-            <span className="font-bold">Vetted and Insured Cleaning Providers:</span> For your peace of mind, all our cleaners come with valid insurance and full background checks.
-          </li>
-          <li>
-            <span className="font-bold">We Provide Everything:</span> Our cleaners bring their own cleaning equipment and products, so you don’t need to worry about a thing.
-          </li>
-          <li>
-            <span className="font-bold">London-Wide Service:</span> No matter where you are in London, we’ve got you covered.
-          </li>
-          <li>
-            <span className="font-bold">Tailored Cleaning Plans:</span> Whether you need a one-time deep clean or regular maintenance, our flexible cleaning plans are designed around your schedule and specific cleaning preferences.
-          </li>
-          <li>
-            <span className="font-bold">Trusted Professionals:</span> Our team of domestic cleaners are thoroughly vetted and trained to the highest standards to ensure your home is treated with care and respect.
-          </li>
-          <li>
-            <span className="font-bold">Eco-Friendly Products:</span> We use environmentally friendly cleaning products that are safe for your family and pets, providing a thorough clean that doesn’t compromise on health or quality.
-          </li>
-        </ul>
-        <h1 className="text-purple-700 text-2xl">
-          Comprehensive Cleaning Coverage: Our domestic cleaning services cover every corner of your home.
-        </h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          From dusting and vacuuming to more detailed tasks like window cleaning and appliance cleaning, we ensure every surface shines. Our services include, but are not limited to:
-        </h1>
-        <ul className=" pb-4 list-disc pl-8 text-gray-700">
-          <li>Kitchen cleaning</li>
-          <li>Bathroom sanitization</li>
-          <li>Living room and bedroom tidying</li>
-          <li>Floor cleaning and mopping</li>
-          <li>Dusting all surfaces</li>
-          <li>And much more!</li>
-        </ul>
-        <h1 className="text-purple-700 text-3xl mb-4">Why Regular Cleaning is Important</h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          Keeping your home regularly cleaned is essential to maintaining a healthy and happy living environment. Here’s why we encourage our clients to schedule regular cleaning services:
-        </h1>
-        <ul className="list-disc pl-8 pb-4 text-gray-700">
-          <li><span className="font-bold">Reduces Viruses & Allergens:</span> Regular cleaning reduces the buildup of dust, bacteria, and allergens, improving your family’s health.</li>
-          <li><span className="font-bold">Improves Air Quality:</span> A clean home ensures fresher air and a more pleasant living environment.</li>
-          <li><span className="font-bold">Prevents Dirt Buildup:</span> Regular cleaning prevents dirt and grime from accumulating, saving you time in the long run.</li>
-          <li><span className="font-bold">Peace of Mind:</span> Enjoy a clean and tidy home without the stress of cleaning it yourself.</li>
-        </ul>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10 mb-10">
-            {services.map((service, index) => (
-                <Card className="overflow-hidden group text-black">
-                  <div className="relative">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="text-center p-4">
-                    <h1 className="text-2xl font-semibold text-purple-700 mb-2">
-                      {service.title}
-                    </h1>
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
-                      {service.price}
-                    </h3>
+                <div className="grid md:grid-cols-2 gap-8 items-center mt-80">
+                    {/* Left Content */}
+                    <div>
+                        <h2 className="text-purple-700 text-2xl font-bold">
+                            Professional Window Cleaning Services in London
+                        </h2>
+                        <p className="mt-4 text-gray-700">
+                            Welcome to CityHousekeeping, where sparkling clean windows are just a service call away!
+                            Specializing in both residential and commercial window cleaning, our skilled team is equipped
+                            to bring clarity and shine to your property’s windows, all the way up to the 4th floor. Whether
+                            you’re a homeowner or a business, our services are designed to offer maximum visual appeal
+                            and enhanced light entry through spotlessly clean windows.
+                        </p>
 
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
+                        <h3 className="text-purple-700 text-xl font-bold mt-6">
+                            Our Window Cleaning Process
+                        </h3>
+                        <p className="font-semibold">Our process is thorough and efficient:</p>
+
+                        <ul className="mt-3 text-gray-700 space-y-2">
+                            <li><strong>1. Assessment:</strong> We start with a complete evaluation of your windows to determine the best cleaning method.</li>
+                            <li><strong>2. Setup:</strong> We set up our equipment with the utmost care to protect your property and ensure efficient access.</li>
+                            <li><strong>3. Cleaning:</strong> Using purified water and professional cleaning solutions, we thoroughly wash the windows, paying close attention to removing all dirt, stains, and blemishes.</li>
+                            <li><strong>4. Drying and Polishing:</strong> After washing, we dry the windows to prevent any streaks and give them a final polish for a sparkling finish.</li>
+                        </ul>
+                    </div>
+
+                    {/* Right Image */}
+                    <div className="flex justify-center">
+                        <img
+                            src={heroimg1.src}
+                            alt="Professional window cleaner"
+                            className="w-full h-auto rounded-lg shadow-md"
+                        />
+                    </div>
+                </div>
+                <h2 className="text-purple-700 text-2xl font-bold mb-4 mt-6">
+                    Why Choose CleaningMastersLondon for Your Window Cleaning?
+                </h2>
+                <ul className="text-gray-700 mb-6 space-y-3">
+                    <li>
+                        <strong>Safety and Professionalism:</strong> Our technicians are fully trained to safely clean windows up to the 4th floor using the latest equipment, including ladders, water-fed poles, and squeegees. We comply with all health and safety regulations to ensure a risk-free service for both our clients and staff.
+                    </li>
+                    <li>
+                        <strong>Advanced Cleaning Technology:</strong> We use high-quality, eco-friendly cleaning solutions and the latest in window cleaning technology to ensure streak-free results. Our water-fed pole system allows us to reach high windows safely from the ground, reducing disturbance to your property and maintaining privacy.
+                    </li>
+                    <li>
+                        <strong>Customized Cleaning Schedules:</strong> We understand that your cleaning needs may vary. That’s why we offer flexible scheduling options that can be customized to fit your timetable. Whether it’s a one-time cleaning or regular maintenance, we’re here to fit seamlessly into your routine.
+                    </li>
+                </ul>
+
+                <h3 className="text-purple-700 text-xl font-bold mb-3">
+                    Our services cater to all types of windows, including:
+                </h3>
+                <ul className="text-gray-700 list-disc list-inside mb-4 space-y-2">
+                    <li>Sliding windows</li>
+                    <li>Bay windows</li>
+                    <li>Skylights</li>
+                    <li>French doors</li>
+                    <li>Shopfronts</li>
+                    <li>Office windows</li>
+                </ul>
+
+                <p className="text-gray-700">
+                    We are committed to providing a detailed cleaning that covers every corner, ensuring that no smudges or dirt remain.
+                </p>
+                <h1 className="text-purple-700 text-2xl mt-10 font-bold">
+                    Cleaning Brands that We Love & Use
+                </h1>
+                <div className="flex flex-wrap justify-center items-center gap-10 py-4">
+                    <Image src={company1} alt="company1" width={150} height={100} />
+                    <Image src={company2} alt="company2" width={150} height={100} />
+                    <Image src={company3} alt="company3" width={150} height={100} />
+                    <Image src={company4} alt="company4" width={150} height={100} />
+                    <Image src={company5} alt="company5" width={150} height={100} />
+                    <Image src={company6} alt="company6" width={150} height={100} />
+                </div>
+                <div className="pt-6 flex justify-center items-center flex-col">
+                    <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
+                    <Link href="/model">
+                        <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
+                            <span>Book your Cleaning Today</span>
+                        </button>
+                    </Link>
+                    <p className="text-center text-purple-700 mt-2">
+                        <span>Just a few clicks and you can arrange for a professional cleaner</span><br />
+                        <span>to take the stress out of your daily routine, leaving you</span><br />
+                        <span>with a spotless home to enjoy.</span>
                     </p>
-                  </div>
-                </Card>
-            ))}
-          </div>
-        <div className="pt-4 flex justify-center items-center flex-col">
-          <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
-          <Link href="/model">
-          <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
-            <span>Book your Cleaning Today</span>
-          </button>
-          </Link>
-          <p className="text-center text-purple-700 mt-2">
-            <span>Just a few clicks and you can arrange for a professional cleaner</span><br />
-            <span>to take the stress out of your daily routine, leaving you</span><br />
-            <span>with a spotless home to enjoy.</span>
-          </p>
+                </div>
+                <div className="mt-10">
+                    <h2 className="text-purple-700 text-2xl font-bold mb-4">Our Window Cleaning</h2>
+                    <div>
+                        {faqData.map((faq, index) => (
+                            <div key={index} className="border-b border-gray-300">
+                                <button
+                                    className="w-full text-left p-4 bg-purple-700 text-white font-semibold flex justify-between items-center"
+                                    onClick={() => toggleFAQ(index)}
+                                >
+                                    {faq.question}
+                                    {openIndex === index ? <FaMinus /> : <FaPlus />}
+                                </button>
+                                {openIndex === index && (
+                                    <div className="p-4 bg-gray-100 text-gray-700">{faq.answer}</div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+               
+            </div>
         </div>
-
-      </div>
-    </div>
-  );
+    );
 }

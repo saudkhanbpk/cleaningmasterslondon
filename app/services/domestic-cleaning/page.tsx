@@ -66,7 +66,7 @@ export default function domesticCleaning() {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
-        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-4xl md:text-5xl z-10"  data-aos="fade-right">
+        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-3xl md:text-5xl z-10"  data-aos="fade-right">
           Domestic Cleaning
         </h1>
       </div>

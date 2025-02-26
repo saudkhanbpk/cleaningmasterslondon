@@ -51,7 +51,7 @@ export default function Navbar() {
         <Link href="/">
           <div className="flex items-center space-x-2 cursor-pointer">
             <Sparkles className="h-6 w-6 text-white" />
-            <span className="text-xl font-bold text-white">CleanPro</span>
+            <span className="text-xl font-bold text-white">CleaningMastersLondon</span>
           </div>
         </Link>
 

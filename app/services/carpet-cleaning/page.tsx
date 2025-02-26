@@ -1,57 +1,106 @@
 "use client";
-import heroImg from "../../../assets/domesticCleaning.jpg";
+import heroImg from "@/assets/carpet/hero.jpeg";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import Image from "next/image";
+import { useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export default function domesticCleaning() {
 
+
   useEffect(() => {
     AOS.init({
       duration: 1500, 
     });
   }, []);
-  const services = [
+
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFAQ = (index: any) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const faqs = [
     {
-      title: "One-Off Cleaning",
-      price: "Starting from £19.85/hour",
-      description: "Perfect for spring cleaning or preparing your home for guests, this service provides a thorough clean, customized to your needs. No hidden fees and professional results every time.",
-      image: require("../../../assets/deepCleaning/1.jpg"),
+      question: "What method do you use for carpet cleaning?",
+      answer: "We use hot water extraction (steam cleaning) as our primary carpet cleaning method, ensuring deep cleaning and removal of dirt, stains, and allergens.",
     },
     {
-      title: "Regular Cleaning",
-      price: "Starting from £27.85/hour",
-      description: "Whether you need weekly, fortnightly, or monthly cleaning, we’ll assign the same cleaner every time, so they get to know your preferences and deliver consistent results.",
-      image: require("../../../assets/deepCleaning/2.jpg"),
+      question: "How often should I have my carpets professionally cleaned?",
+      answer: "For households with pets or children, we recommend cleaning every 6-12 months. Otherwise, once a year is usually sufficient to maintain freshness.",
     },
     {
-      title: "End of Tenancy Cleaning",
-      price: "Starting from £22.50/hour",
-      description: "Ensure your property is in top condition before moving out. Our experienced team will arrive quickly and get the job done, ensuring you meet your landlord’s cleaning expectations.",
-      image: require("../../../assets/deepCleaning/3.jpg"),
+      question: "How long will it take for my carpets to dry after cleaning?",
+      answer: "It typically takes 4-6 hours for carpets to dry completely, but this may vary depending on humidity and airflow in the room.",
     },
     {
-      title: "Deep Cleaning",
-      price: "Starting from £25.50/hour",
-      description: "Need a more thorough clean? Our deep cleaning service tackles those hard-to-reach places and ensures your home feels fresh and spotless.",
-      image: require("../../../assets/deepCleaning/4.jpg"),
+      question: "Will carpet cleaning remove stains and odors?",
+      answer: "Yes, our deep cleaning process removes most stains and odors. However, some deep-set stains may require specialized treatment.",
     },
     {
-      title: "After Party Cleaning",
-      price: "Starting from £28/hour",
-      description: "Had a big night? Don’t worry—our after-party cleaning specialists will have your place back to normal in no time. Let us take care of the mess while you relax.",
-      image: require("../../../assets/deepCleaning/5.jpg"),
+      question: "Are the chemicals used in carpet cleaning safe for pets and children?",
+      answer: "Absolutely! We use eco-friendly, non-toxic cleaning solutions that are safe for pets and children.",
     },
     {
-      title: "Ironing Service",
-      price: "Starting from £24.50/hour",
-      description: "We not only clean your home but also offer professional ironing services to keep your wardrobe looking sharp. Our dependable staff ensures your clothes are well taken care of.",
-      image: require("../../../assets/deepCleaning/7.jpg"),
+      question: "Do I need to vacuum before the carpet cleaning crew arrives?",
+      answer: "It's not necessary, but a light vacuum before our arrival can help improve results. We also pre-vacuum high-traffic areas as part of our service.",
+    },
+    {
+      question: "What do I need to do to prepare my home for carpet cleaning?",
+      answer: "Please remove small furniture, toys, and fragile items from the area to be cleaned. Our team will handle the rest.",
+    },
+    {
+      question: "Can you guarantee the removal of all spots or stains?",
+      answer: "While we can remove most stains, some may be permanent due to chemical reactions with the carpet fibers. We will do our best to achieve the best results.",
+    },
+    {
+      question: "Do you offer any kind of satisfaction guarantee?",
+      answer: "Yes! We stand by our work and offer a satisfaction guarantee. If you’re not happy with the results, we’ll re-clean the area free of charge.",
+    },
+    {
+      question: "How do I schedule a carpet cleaning appointment?",
+      answer: "You can schedule an appointment by calling us, visiting our website, or sending us a message through our contact form.",
     },
   ];
+  
+
+  const pricingData = [
+    {
+      title: "Prices for Carpet Cleaning & Rug Cleaning",
+      note: "Note: Our minimum order is £80.00",
+      prices: [
+        { desc: "1 Bedroom", price: "£40" },
+        { desc: "2 Bedrooms", price: "£80" },
+        { desc: "3 Bedrooms", price: "£120" },
+        { desc: "4 Bedrooms", price: "£160" },
+        { desc: "5 Bedrooms", price: "£200" },
+        { desc: "1 Living Room", price: "£40" },
+        { desc: "Landing - Stairs", price: "£30" },
+      ],
+    },
+    {
+      title: "Prices for Professional Upholstery Cleaning Services",
+      prices: [
+        { desc: "Dining Chair", price: "£10" },
+        { desc: "Armchair", price: "£35" },
+        { desc: "Two Seater Sofa", price: "£65" },
+        { desc: "Three Seater Sofa", price: "£95" },
+        { desc: "Mattress (Single/Double-King)", price: "£30/£45" },
+        { desc: "Steam Curtains", price: "£75" },
+      ],
+    },
+    {
+      title: "Prices for Cleaning Extras",
+      prices: [
+        { desc: "Keys collection and return", price: "£20" },
+        { desc: "London Congestion Charge", price: "£15" },
+        { desc: "Parking fees", price: "TBA" },
+      ],
+    },
+  ];
+
   return (
     <div>
       <div className="relative">
@@ -66,96 +115,131 @@ export default function domesticCleaning() {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
-        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-5xl z-10"  data-aos="fade-right">
-          Domestic Cleaning
+        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-3xl md:text-5xl z-10"  data-aos="fade-right">
+          Carpet Cleaning
         </h1>
       </div>
       <div className="container px-10 py-4">
         <h1 className="text-purple-700 text-2xl mt-80">
-          Book Now and Get a 10% Discount on your first domestic cleaning, when you book regular cleaning (Weekly, Fortnightly, or Monthly). (First booking only)
+        Current Offer:
         </h1>
-        <p className="py-6">At City Housekeeping, we understand that a clean home is a happy home. That's why our domestic cleaning services are designed to meet your every need, ensuring a pristine environment without the hassle. Our experienced and trustworthy cleaners specialize in delivering top-notch home cleaning services that not only meet but exceed your expectations.</p>
+        <p className="py-2 text-gray-600 text-xl">1. Book Now and Get Free Carpet Cleaning for 1 Room <br/> 
+        2. When you book and pay for a minimum of 3 carpets. </p>
 
         <h1 className="text-purple-700 text-2xl">
-          Why Choose cleaningMasterLondon for Domestic Cleaning?
+        Just a few clicks and you can arrange for a professional cleaner to take the stress out of your daily routine, leaving you with a spotless home to enjoy.
         </h1>
+      <div className="mt-12">
+      <div className="grid md:grid-cols-2 gap-12">
+        {/* Left Column - Why Choose Us */}
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold text-purple-700 mb-4">
+            Why Choose Our Steam Cleaning Solutions
+          </h2>
+          <ul className="space-y-4 text-gray-700">
+            <li>
+              <strong>Advanced Steam Cleaning Technology:</strong> We use the
+              latest in steam cleaning technology to penetrate deep into the
+              fibers of carpets, upholstery, and mattresses, removing dirt,
+              bacteria, and allergens that traditional cleaning methods cannot
+              reach.
+            </li>
+            <li>
+              <strong>Expertise in Fabric Care:</strong> Our team of
+              professionals is highly trained in the care of all types of
+              fabrics and materials. Whether it’s a delicate silk sofa or a
+              sturdy wool carpet, we adjust our cleaning methods to suit each
+              material, ensuring safe and effective results every time.
+            </li>
+            <li>
+              <strong>Eco-Friendly and Safe:</strong> Health and safety are
+              paramount in our work. Our steam cleaning processes use minimal
+              chemicals, making it an eco-friendly option that is safe for
+              children, pets, and individuals with allergies.
+            </li>
+            <li>
+              <strong>Fast Drying Times:</strong> Our efficient steam cleaning
+              techniques ensure that your carpets, upholstery, and mattresses
+              dry quickly, reducing disruption to your daily routine and
+              preventing mold growth.
+            </li>
+          </ul>
+        </div>
 
-        {/* Bullet Points for Benefits */}
-        <ul className="py-6 list-disc pl-8 text-gray-600">
-          <li>
-            <span className="font-bold">Professional and Experienced Cleaners:</span> Our trained professionals have extensive housekeeping experience to ensure your home is in safe hands.
-          </li>
-          <li>
-            <span className="font-bold">Vetted and Insured Cleaning Providers:</span> For your peace of mind, all our cleaners come with valid insurance and full background checks.
-          </li>
-          <li>
-            <span className="font-bold">We Provide Everything:</span> Our cleaners bring their own cleaning equipment and products, so you don’t need to worry about a thing.
-          </li>
-          <li>
-            <span className="font-bold">London-Wide Service:</span> No matter where you are in London, we’ve got you covered.
-          </li>
-          <li>
-            <span className="font-bold">Tailored Cleaning Plans:</span> Whether you need a one-time deep clean or regular maintenance, our flexible cleaning plans are designed around your schedule and specific cleaning preferences.
-          </li>
-          <li>
-            <span className="font-bold">Trusted Professionals:</span> Our team of domestic cleaners are thoroughly vetted and trained to the highest standards to ensure your home is treated with care and respect.
-          </li>
-          <li>
-            <span className="font-bold">Eco-Friendly Products:</span> We use environmentally friendly cleaning products that are safe for your family and pets, providing a thorough clean that doesn’t compromise on health or quality.
-          </li>
-        </ul>
-        <h1 className="text-purple-700 text-2xl">
-          Comprehensive Cleaning Coverage: Our domestic cleaning services cover every corner of your home.
+        {/* Right Column - Our Services */}
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold text-purple-700 mb-4">
+            Our Services
+          </h2>
+          <ul className="space-y-4 text-gray-600">
+            <li>
+              <strong>Carpet Steam Cleaning:</strong> Revive your carpets with
+              our thorough steam cleaning service. Perfect for removing stains,
+              dirt, and allergens, our method leaves your carpets looking and
+              feeling fresh, enhancing the comfort and appearance of your home
+              or office.
+            </li>
+            <li>
+              <strong>Upholstery Sofa Steaming:</strong> Refresh your sofas and
+              chairs with our specialized upholstery steaming services. We
+              tackle everything from simple refreshes to deep stains, bringing
+              new life to your furniture.
+            </li>
+            <li>
+              <strong>Mattress Steaming:</strong> Ensure a good night’s sleep
+              with our mattress steaming service. We eliminate dust mites,
+              bacteria, and odors, providing you with a hygienic and
+              allergen-free sleeping environment.
+            </li>
+            <li>
+              <strong>Sofa Steam Cleaning:</strong> Extend the life of your
+              living room centerpiece with our sofa steam cleaning. Ideal for
+              regular maintenance or one-off deep cleans, our service helps
+              preserve your sofa’s beauty and comfort.
+            </li>
+          </ul>
+        </div>
+      </div>
+      </div>
+      
+        {/* <h1 className="text-purple-700 text-2xl">
+        Ready to Transform Your Home?
         </h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          From dusting and vacuuming to more detailed tasks like window cleaning and appliance cleaning, we ensure every surface shines. Our services include, but are not limited to:
-        </h1>
-        <ul className=" pb-4 list-disc pl-8 text-gray-700">
-          <li>Kitchen cleaning</li>
-          <li>Bathroom sanitization</li>
-          <li>Living room and bedroom tidying</li>
-          <li>Floor cleaning and mopping</li>
-          <li>Dusting all surfaces</li>
-          <li>And much more!</li>
-        </ul>
-        <h1 className="text-purple-700 text-3xl mb-4">Why Regular Cleaning is Important</h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          Keeping your home regularly cleaned is essential to maintaining a healthy and happy living environment. Here’s why we encourage our clients to schedule regular cleaning services:
-        </h1>
-        <ul className="list-disc pl-8 pb-4 text-gray-700">
-          <li><span className="font-bold">Reduces Viruses & Allergens:</span> Regular cleaning reduces the buildup of dust, bacteria, and allergens, improving your family’s health.</li>
-          <li><span className="font-bold">Improves Air Quality:</span> A clean home ensures fresher air and a more pleasant living environment.</li>
-          <li><span className="font-bold">Prevents Dirt Buildup:</span> Regular cleaning prevents dirt and grime from accumulating, saving you time in the long run.</li>
-          <li><span className="font-bold">Peace of Mind:</span> Enjoy a clean and tidy home without the stress of cleaning it yourself.</li>
-        </ul>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10 mb-10">
-            {services.map((service, index) => (
-                <Card className="overflow-hidden group text-black">
-                  <div className="relative">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="text-center p-4">
-                    <h1 className="text-2xl font-semibold text-purple-700 mb-2">
-                      {service.title}
-                    </h1>
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
-                      {service.price}
-                    </h3>
+        <p className="text-gray-700 text-xl py-4">
+        If you’re looking for top-notch steam carpet cleaning, upholstery sofa steaming, or mattress steaming services, look no further. Contact CityHousekeeping today to schedule a service or learn more about how we can help you maintain a clean and healthy environment in your home or office. Our commitment to quality and customer satisfaction ensures that your fabrics are in good hands.
+        </p> */}
 
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
-                    </p>
-                  </div>
-                </Card>
-            ))}
-          </div>
+        <h1 className="text-3xl font-bold text-center text-purple-700 mb-6">
+        Our Cleaning Prices
+      </h1>
+      <div className="flex flex-col md:flex-row gap-6 p-6 items-start">
+          {pricingData.map((category, index) => (
+            <div key={index} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden w-full md:w-1/3 flex flex-col">
+              <h2 className="text-xl font-bold text-purple-700 text-center p-4">{category.title}</h2>
+              <table className="w-full border-collapse flex-1">
+                <thead>
+                  <tr className="bg-purple-500 text-white">
+                    <th className="p-3 text-left">Service</th>
+                    <th className="p-3 text-left">Prices</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {category.prices.map((item, idx) => (
+                    <tr key={idx} className="border-b">
+                      <td className="p-3 text-gray-700">{item.desc}</td>
+                      <td className="p-3 text-gray-700">
+                      {item.price}
+                        {/* {item.price} {item.duration && <span className="text-sm text-gray-500">({item.duration})</span>}
+                        {item.note && <span className="text-xs text-gray-500 block">{item.note}</span>} */}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+    </div> 
         <div className="pt-4 flex justify-center items-center flex-col">
           <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
           <Link href="/model">
@@ -169,8 +253,27 @@ export default function domesticCleaning() {
             <span>with a spotless home to enjoy.</span>
           </p>
         </div>
-
-      </div>
+       <div className="container px-10 py-4">
+       <h2 className="text-2xl font-bold text-purple-700 mb-6">
+        Frequently Asked Questions
+      </h2>
+      {faqs.map((faq, index) => (
+        <div key={index} className="mb-2">
+          <button
+            onClick={() => toggleFAQ(index)}
+            className="w-full flex justify-between items-center bg-purple-700 text-white text-lg font-medium p-4 rounded-md shadow-md"
+          >
+            {faq.question}
+            {openIndex === index ? <FaMinus /> : <FaPlus />}
+          </button>
+          {openIndex === index && (
+            <div className="bg-gray-100 text-gray-800 p-4 border-l-4 border-teal-500 rounded-md mt-2">
+              {faq.answer}
+            </div>
+          )}
+        </div>
+      ))}
+       </div>
     </div>
   );
 }

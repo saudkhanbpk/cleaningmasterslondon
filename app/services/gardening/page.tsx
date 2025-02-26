@@ -1,5 +1,7 @@
 "use client";
-import heroImg from "@/assets/domesticCleaning.jpg";
+import heroImg from "@/assets/gardening/hero.jpg";
+import hero1 from "@/assets/gardening/hero1.jpg";
+import hero2 from "@/assets/gardening/hero2.jpg";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
@@ -9,168 +11,118 @@ import 'aos/dist/aos.css';
 
 export default function domesticCleaning() {
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1500, 
-    });
-  }, []);
-  const services = [
-    {
-      title: "One-Off Cleaning",
-      price: "Starting from £19.85/hour",
-      description: "Perfect for spring cleaning or preparing your home for guests, this service provides a thorough clean, customized to your needs. No hidden fees and professional results every time.",
-      image: require("../../../assets/deepCleaning/1.jpg"),
-    },
-    {
-      title: "Regular Cleaning",
-      price: "Starting from £27.85/hour",
-      description: "Whether you need weekly, fortnightly, or monthly cleaning, we’ll assign the same cleaner every time, so they get to know your preferences and deliver consistent results.",
-      image: require("../../../assets/deepCleaning/2.jpg"),
-    },
-    {
-      title: "End of Tenancy Cleaning",
-      price: "Starting from £22.50/hour",
-      description: "Ensure your property is in top condition before moving out. Our experienced team will arrive quickly and get the job done, ensuring you meet your landlord’s cleaning expectations.",
-      image: require("../../../assets/deepCleaning/3.jpg"),
-    },
-    {
-      title: "Deep Cleaning",
-      price: "Starting from £25.50/hour",
-      description: "Need a more thorough clean? Our deep cleaning service tackles those hard-to-reach places and ensures your home feels fresh and spotless.",
-      image: require("../../../assets/deepCleaning/4.jpg"),
-    },
-    {
-      title: "After Party Cleaning",
-      price: "Starting from £28/hour",
-      description: "Had a big night? Don’t worry—our after-party cleaning specialists will have your place back to normal in no time. Let us take care of the mess while you relax.",
-      image: require("../../../assets/deepCleaning/5.jpg"),
-    },
-    {
-      title: "Ironing Service",
-      price: "Starting from £24.50/hour",
-      description: "We not only clean your home but also offer professional ironing services to keep your wardrobe looking sharp. Our dependable staff ensures your clothes are well taken care of.",
-      image: require("../../../assets/deepCleaning/7.jpg"),
-    },
-  ];
-  return (
-    <div>
-      <div className="relative">
-        <div
-          className="absolute inset-0 bg-cover"
-          style={{
-            backgroundImage: `url(${heroImg.src})`,
-            height: "300px",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-5xl z-10"  data-aos="fade-right">
-          Domestic Cleaning
-        </h1>
-      </div>
-      <div className="container px-10 py-4">
-        <h1 className="text-purple-700 text-2xl mt-80">
-          Book Now and Get a 10% Discount on your first domestic cleaning, when you book regular cleaning (Weekly, Fortnightly, or Monthly). (First booking only)
-        </h1>
-        <p className="py-6">At City Housekeeping, we understand that a clean home is a happy home. That's why our domestic cleaning services are designed to meet your every need, ensuring a pristine environment without the hassle. Our experienced and trustworthy cleaners specialize in delivering top-notch home cleaning services that not only meet but exceed your expectations.</p>
+    useEffect(() => {
+        AOS.init({
+            duration: 1500,
+        });
+    }, []);
 
-        <h1 className="text-purple-700 text-2xl">
-          Why Choose cleaningMasterLondon for Domestic Cleaning?
-        </h1>
+    return (
+        <div>
+            <div className="relative">
+                <div
+                    className="absolute inset-0 bg-cover"
+                    style={{
+                        backgroundImage: `url(${heroImg.src})`,
+                        height: "300px",
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                </div>
+                <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-5xl z-10" data-aos="fade-right">
+                    Gardening
+                </h1>
+            </div>
+            <div className="container px-10 py-4">
+                <div className="mt-80 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p className="text-gray-700 mb-4">
+                            Taking care of your garden requires time, expertise, and dedication. At CleaningMastersLondon, our professional gardening team is here to help you maintain a beautiful, healthy outdoor space throughout the year. Whether you need regular maintenance or specialized care, we provide a wide range of services tailored to meet your garden’s specific needs.
+                        </p>
+                        <h2 className="text-purple-700 text-2xl font-bold mb-4">
+                            Why Choose CleaningMastersLondon Gardening Services?
+                        </h2>
+                        <ul className="text-gray-700 space-y-3">
+                            <li>
+                                <strong>Eco-Friendly Solutions</strong><br />
+                                We are committed to using environmentally friendly products and techniques. Our eco-conscious approach ensures your garden remains healthy while reducing the impact on the environment. From organic fertilizers to sustainable practices, we care about both your garden and the planet.
+                            </li>
+                            <li>
+                                <strong>5-Star Gardening Team</strong><br />
+                                Our team of gardening professionals has the expertise to handle everything from simple lawn mowing to complex landscaping projects. With years of experience across North, South, East, and West London, we guarantee that your garden will receive the attention and care it deserves. Our services extend throughout London and beyond, ensuring gardens of all types are maintained to the highest standards.
+                            </li>
+                            <li>
+                                <strong>Cost-Effective Rates</strong><br />
+                                We believe that professional gardening services should be accessible. That’s why we offer competitive, transparent pricing. Our full-service packages and year-round maintenance plans are designed to fit within your budget, giving you the peace of mind that your garden is in good hands without hidden costs.
+                            </li>
+                        </ul>
+                    </div>
 
-        {/* Bullet Points for Benefits */}
-        <ul className="py-6 list-disc pl-8 text-gray-600">
-          <li>
-            <span className="font-bold">Professional and Experienced Cleaners:</span> Our trained professionals have extensive housekeeping experience to ensure your home is in safe hands.
-          </li>
-          <li>
-            <span className="font-bold">Vetted and Insured Cleaning Providers:</span> For your peace of mind, all our cleaners come with valid insurance and full background checks.
-          </li>
-          <li>
-            <span className="font-bold">We Provide Everything:</span> Our cleaners bring their own cleaning equipment and products, so you don’t need to worry about a thing.
-          </li>
-          <li>
-            <span className="font-bold">London-Wide Service:</span> No matter where you are in London, we’ve got you covered.
-          </li>
-          <li>
-            <span className="font-bold">Tailored Cleaning Plans:</span> Whether you need a one-time deep clean or regular maintenance, our flexible cleaning plans are designed around your schedule and specific cleaning preferences.
-          </li>
-          <li>
-            <span className="font-bold">Trusted Professionals:</span> Our team of domestic cleaners are thoroughly vetted and trained to the highest standards to ensure your home is treated with care and respect.
-          </li>
-          <li>
-            <span className="font-bold">Eco-Friendly Products:</span> We use environmentally friendly cleaning products that are safe for your family and pets, providing a thorough clean that doesn’t compromise on health or quality.
-          </li>
-        </ul>
-        <h1 className="text-purple-700 text-2xl">
-          Comprehensive Cleaning Coverage: Our domestic cleaning services cover every corner of your home.
-        </h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          From dusting and vacuuming to more detailed tasks like window cleaning and appliance cleaning, we ensure every surface shines. Our services include, but are not limited to:
-        </h1>
-        <ul className=" pb-4 list-disc pl-8 text-gray-700">
-          <li>Kitchen cleaning</li>
-          <li>Bathroom sanitization</li>
-          <li>Living room and bedroom tidying</li>
-          <li>Floor cleaning and mopping</li>
-          <li>Dusting all surfaces</li>
-          <li>And much more!</li>
-        </ul>
-        <h1 className="text-purple-700 text-3xl mb-4">Why Regular Cleaning is Important</h1>
-        <h1 className="text-gray-700 text-xl py-4">
-          Keeping your home regularly cleaned is essential to maintaining a healthy and happy living environment. Here’s why we encourage our clients to schedule regular cleaning services:
-        </h1>
-        <ul className="list-disc pl-8 pb-4 text-gray-700">
-          <li><span className="font-bold">Reduces Viruses & Allergens:</span> Regular cleaning reduces the buildup of dust, bacteria, and allergens, improving your family’s health.</li>
-          <li><span className="font-bold">Improves Air Quality:</span> A clean home ensures fresher air and a more pleasant living environment.</li>
-          <li><span className="font-bold">Prevents Dirt Buildup:</span> Regular cleaning prevents dirt and grime from accumulating, saving you time in the long run.</li>
-          <li><span className="font-bold">Peace of Mind:</span> Enjoy a clean and tidy home without the stress of cleaning it yourself.</li>
-        </ul>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10 mb-10">
-            {services.map((service, index) => (
-                <Card className="overflow-hidden group text-black">
-                  <div className="relative">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="text-center p-4">
-                    <h1 className="text-2xl font-semibold text-purple-700 mb-2">
-                      {service.title}
-                    </h1>
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">
-                      {service.price}
-                    </h3>
+                    <div>
+                        <Image
+                            src={hero1}
+                            alt="Gardening Tools and Flowers"
+                            className="rounded-lg shadow-lg object-cover"
+                        />
+                    </div>
+                </div>
 
-                    <p className="text-gray-600 mb-4">
-                      {service.description}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-10 mb-10">
+                    {/* Image Section */}
+                    <div>
+                        <img
+                            src={hero2.src}
+                            alt="Gardening Services"
+                            className="w-full rounded-lg shadow-lg"
+                        />
+                    </div>
+
+                    {/* Text Section */}
+                    <div>
+                        <h2 className="text-purple-700 text-2xl font-bold mb-4">
+                            How Our Gardening Services Can Help You
+                        </h2>
+                        <p className="text-gray-700 mb-4">
+                            Maintaining a garden can be time-consuming and exhausting, but it doesn’t have to be. Whether you need assistance with trimming, leaf collection, hedge cutting, or landscaping, our experts can save you valuable time and effort.
+                        </p>
+                        <p className="text-gray-700 mb-4">
+                            By choosing City Housekeeping, you can be confident that your garden will look its best, allowing you to enjoy your outdoor space without the hassle. Our services are designed to bring out the full potential of your garden, whether you’re looking to improve the aesthetics, boost the health of your plants, or simply keep things tidy.
+                        </p>
+                        <p className="text-gray-700 mb-6">
+                            We are dedicated to making sure that every aspect of your garden is cared for with precision and expertise.
+                        </p>
+
+                        <h3 className="text-purple-700 text-xl font-bold mb-3">Your Garden, Your Way</h3>
+                        <p className="text-gray-700 mb-6">
+                            At City Housekeeping, we understand that every garden is unique. That’s why we offer flexible service options, allowing you to decide what areas need attention and when. Whether you need a one-time cleanup or regular maintenance, we will work around your schedule to ensure your garden is always in top shape.
+                        </p>
+
+                        <h3 className="text-purple-700 text-xl font-bold mb-3">Get in Touch Today!</h3>
+                        <p className="text-gray-700">
+                            Looking for reliable gardening services in London? Contact us today to find out how we can help transform your garden. Our professional team is ready to assist with any of your gardening needs, and we guarantee 100% satisfaction.
+                        </p>
+                        <p className="text-gray-700 font-bold mt-2">
+                            Call us on <span className="text-purple-600">+44 770 1325857</span> to schedule your first gardening service!
+                        </p>
+                    </div>
+                </div>
+                <div className="pt-4 flex justify-center items-center flex-col">
+                    <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
+                    <Link href="/model">
+                        <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
+                            <span>Book your Cleaning Today</span>
+                        </button>
+                    </Link>
+                    <p className="text-center text-purple-700 mt-2">
+                        <span>Just a few clicks and you can arrange for a professional cleaner</span><br />
+                        <span>to take the stress out of your daily routine, leaving you</span><br />
+                        <span>with a spotless home to enjoy.</span>
                     </p>
-                  </div>
-                </Card>
-            ))}
-          </div>
-        <div className="pt-4 flex justify-center items-center flex-col">
-          <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
-          <Link href="/model">
-          <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
-            <span>Book your Cleaning Today</span>
-          </button>
-          </Link>
-          <p className="text-center text-purple-700 mt-2">
-            <span>Just a few clicks and you can arrange for a professional cleaner</span><br />
-            <span>to take the stress out of your daily routine, leaving you</span><br />
-            <span>with a spotless home to enjoy.</span>
-          </p>
-        </div>
+                </div>
 
-      </div>
-    </div>
-  );
+            </div>
+        </div>
+    );
 }

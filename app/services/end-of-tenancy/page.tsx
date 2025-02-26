@@ -130,7 +130,7 @@ export default function tenancyCleaning() {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
-        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-4xl md:text-5xl  z-10" data-aos="fade-right">
+        <h1 className="absolute inset-0 flex justify-center mt-32 items-center text-white text-3xl md:text-5xl  z-10" data-aos="fade-right">
           End of Tenancy
         </h1>
       </div>
@@ -209,7 +209,7 @@ export default function tenancyCleaning() {
           <li><span className="font-bold">Prevents Dirt Buildup:</span> Regular cleaning prevents dirt and grime from accumulating, saving you time in the long run.</li>
           <li><span className="font-bold">Peace of Mind:</span> Enjoy a clean and tidy home without the stress of cleaning it yourself.</li>
         </ul>
-        <div className="flex flex-col md:flex-row gap-6 p-6 items-start">
+        <div className="flex flex-col md:flex-row items-start">
           {pricingData.map((category, index) => (
             <div key={index} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden w-full md:w-1/3 flex flex-col">
               <h2 className="text-xl font-bold text-purple-700 text-center p-4">{category.title}</h2>
@@ -248,25 +248,28 @@ export default function tenancyCleaning() {
             <span>with a spotless home to enjoy.</span>
           </p>
         </div>
+        <div>
         <h2 className="text-2xl font-bold text-purple-700 mb-6">
-        Frequently Asked Questions
-      </h2>
-      {faqs.map((faq, index) => (
-        <div key={index} className="mb-2">
-          <button
-            onClick={() => toggleFAQ(index)}
-            className="w-full flex justify-between items-center bg-purple-700 text-white p-4 rounded-lg focus:outline-none"
-          >
-            <span>{faq.question}</span>
-            {openIndex === index ? <FaMinus /> : <FaPlus />}
-          </button>
-          {openIndex === index && (
-            <div className="bg-gray-100 p-4 border border-gray-300 rounded-b-lg">
-              {faq.answer}
-            </div>
-          )}
+          Frequently Asked Questions
+        </h2>
+        {faqs.map((faq, index) => (
+          <div key={index} className="mb-2">
+            <button
+              onClick={() => toggleFAQ(index)}
+              className="w-full flex justify-between items-center bg-purple-700 text-white p-4 rounded-lg focus:outline-none"
+            >
+              <span>{faq.question}</span>
+              {openIndex === index ? <FaMinus /> : <FaPlus />}
+            </button>
+            {openIndex === index && (
+              <div className="bg-gray-100 p-4 border border-gray-300 rounded-b-lg">
+                {faq.answer}
+              </div>
+            )}
+          </div>
+        ))}
         </div>
-      ))}
+    
       </div>
     </div>
   );
