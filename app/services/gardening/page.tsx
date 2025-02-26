@@ -1,5 +1,5 @@
 "use client";
-import heroImg from "../../../assets/domesticCleaning.jpg";
+import heroImg from "@/assets/domesticCleaning.jpg";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
