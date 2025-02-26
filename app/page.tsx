@@ -17,15 +17,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import heroImg from "../assets/Hero.jpg";
-import Client1 from "../assets/Client1.jpeg";
-import Client2 from "../assets/Client2.jpg";
-import Client3 from "../assets/Client3.jpeg";
+import heroImg from "@/assets/Hero.jpg";
+import Client1 from "@/assets/Client1.jpeg";
+import Client2 from "@/assets/Client2.jpg";
+import Client3 from "@/assets/Client3.jpeg";
 import Link from "next/link";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
-
 
 export default function Home() {
   useEffect(() => {

@@ -1,5 +1,5 @@
 "use client";
-import heroImg from "../../../assets/hero.jpg";
+import heroImg from "@/assets/tenancyClening/hero.jpg";
 import Link from "next/link";
 import { useEffect } from "react";
 import AOS from 'aos';

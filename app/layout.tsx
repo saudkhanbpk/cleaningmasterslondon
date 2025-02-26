@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { FaWhatsapp } from 'react-icons/fa'; // Import WhatsApp icon
+import { FaWhatsapp } from 'react-icons/fa'; 
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,11 +27,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        
-        {/* Toast Container for notifications */}
+             
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
-        {/* WhatsApp Button (fixed on the left) */}
         <a 
           href="https://wa.me/+447701325857"
           target="_blank"
