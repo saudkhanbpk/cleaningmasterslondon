@@ -108,35 +108,35 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20">
       <div className="container mx-auto">
         <div className="max-w-2xl mx-auto text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl text-purple-700 font-bold mb-4">Contact Us</h2>
+          <p className="text-gray-800">
             Get in touch with us for a free quote or any questions
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="p-6">
             <Card className="p-4 h-[395px]">
-              <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
-              <p className="mb-6 text-lg">
+              <h2 className="text-2xl font-bold text-purple-700 mb-4">Get in Touch</h2>
+              <p className="mb-6 text-lg text-gray-800">
                 We’d love to hear from you! Reach out to us for any queries or
                 assistance.
               </p>
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <MapPin className="w-6 h-6 text-primary" />
-                  <p>123 Cleaning Street, City, State 12345</p>
+                  <MapPin className="w-6 h-6 text-purple-700" />
+                  <p className="text-gray-800">123 Cleaning Street, City, State 12345</p>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Mail className="w-6 h-6 text-primary" />
-                  <p>contact@cleanpro.com</p>
+                  <Mail className="w-6 h-6 text-purple-700" />
+                  <p className="text-gray-800">contact@cleanpro.com</p>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Phone className="w-6 h-6 text-primary" />
-                  <p>(555) 123-4567</p>
+                  <Phone className="w-6 h-6 text-purple-700" />
+                  <p className="text-gray-800">(555) 123-4567</p>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <Clock className="w-6 h-6 text-primary" />
-                  <p>Mon-Fri: 8am-6pm, Sat: 9am-4pm</p>
+                  <Clock className="w-6 h-6 text-purple-700" />
+                  <p className="text-gray-800">Mon-Fri: 8am-6pm, Sat: 9am-4pm</p>
                 </div>
               </div>
             </Card>
@@ -147,6 +147,7 @@ const Contact: React.FC = () => {
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <Input
                   placeholder="Your Name"
+                  className="rounded-xl border-gray-500"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
@@ -161,12 +162,13 @@ const Contact: React.FC = () => {
                     <span className="absolute left-3 p-3">+44</span>
                     <input
                       type="text"
+                     
                       maxLength={10}
                       placeholder="Enter Your Phone Number"
-                      className={`p-3 pl-16 border rounded-md w-full ${
+                      className={`p-2 pl-16 border rounded-xl w-full ${
                         errors.phoneNumber
                           ? "border-red-500"
-                          : "border-gray-300"
+                          : "border-gray-500"
                       }`}
                       value={formData.phoneNumber}
                       onChange={(e) => {
@@ -194,6 +196,7 @@ const Contact: React.FC = () => {
                 <Input
                   type="email"
                   placeholder="Your Email"
+                  className="rounded-xl border-gray-500"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -210,6 +213,7 @@ const Contact: React.FC = () => {
                 {/* Message Input */}
                 <Textarea
                   placeholder="Your Message"
+                  className="rounded-xl border-gray-500 h-32"
                   value={formData.message}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -217,7 +221,7 @@ const Contact: React.FC = () => {
                       message: e.target.value,
                     }))
                   }
-                  className="h-32"
+                  
                   onBlur={() => validateField("message", formData.message)}
                 />
                 {errors.message && (
@@ -225,7 +229,7 @@ const Contact: React.FC = () => {
                 )}
 
                 {/* Submit Button */}
-                <Button type="submit" className="w-full bg-purple-700 hover:bg-purple-800" disabled={loading}>
+                <Button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white"disabled={loading}>
                   {loading ? "Sending..." : "Send Message"}
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>

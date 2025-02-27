@@ -35,7 +35,7 @@ export default function domesticCleaning() {
                     Gardening
                 </h1>
             </div>
-            <div className="container px-10 py-4">
+            <div className=" px-4 mx-auto container py-4">
                 <div className="mt-80 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
                         <p className="text-gray-700 mb-4">
@@ -78,8 +78,6 @@ export default function domesticCleaning() {
                             className="w-full rounded-lg shadow-lg"
                         />
                     </div>
-
-                    {/* Text Section */}
                     <div>
                         <h2 className="text-purple-700 text-2xl font-bold mb-4">
                             How Our Gardening Services Can Help You

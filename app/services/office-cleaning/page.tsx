@@ -84,7 +84,7 @@ export default function domesticCleaning() {
           Office Cleaning
         </h1>
       </div>
-      <div className="container px-10 py-4">
+      <div className=" px-4 mx-auto container py-4">
         <h1 className="text-purple-700 text-2xl mt-80">
         Welcome CleaningMastersLondon, where cleanliness meets professionalism.
         </h1>
@@ -104,7 +104,7 @@ export default function domesticCleaning() {
             <span className="font-bold">Commitment to Health and Safety: </span> We adhere to strict health and safety protocols, using only non-toxic, environmentally friendly cleaning products that are safe for both people and the planet. Our practices are designed to reduce allergens and pollutants in your workspace, supporting the wellbeing of your employees and clients.
           </li>
         </ul>
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid md:grid-cols-2 gap-3">
         {/* Office Cleaning Services */}
        
 
@@ -161,10 +161,14 @@ export default function domesticCleaning() {
             <span>with a spotless home to enjoy.</span>
           </p>
         </div>
+        <div className="mt-8">
+        <h2 className="text-2xl font-bold text-purple-700 mb-6">
+          Frequently Asked Questions
+        </h2>
         {faqs.map((faq, index) => (
         <div key={index} className="mb-2">
           <button
-            className="w-full flex justify-between items-center bg-teal-500 text-white font-medium px-6 py-4 rounded-md focus:outline-none"
+            className="w-full flex justify-between items-center bg-purple-700 text-white font-medium py-4 px-6 rounded-md focus:outline-none"
             onClick={() => toggleFAQ(index)}
           >
             {faq.question}
@@ -177,6 +181,8 @@ export default function domesticCleaning() {
           )}
         </div>
       ))}
+          </div>
+       
       </div>
     </div>
   );

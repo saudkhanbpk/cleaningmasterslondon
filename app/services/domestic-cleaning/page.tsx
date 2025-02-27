@@ -70,7 +70,7 @@ export default function domesticCleaning() {
           Domestic Cleaning
         </h1>
       </div>
-      <div className="container px-10 py-4">
+      <div className=" px-4 mx-auto container py-4">
         <h1 className="text-purple-700 text-2xl mt-80">
           Book Now and Get a 10% Discount on your first domestic cleaning, when you book regular cleaning (Weekly, Fortnightly, or Monthly). (First booking only)
         </h1>

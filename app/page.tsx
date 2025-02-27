@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { useEffect } from "react";
+import Blog from "@/app/home-blogs/page";
 import {
   CheckCircle2,
   Sparkles,
@@ -174,7 +175,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-background overflow-hidden">
+    <div className="bg-background overflow-hidden mx-auto">
       <motion.section
         id="home"
         className="relative h-[600px] flex items-center justify-center text-white"
@@ -248,7 +249,7 @@ export default function Home() {
               >
                 <Card className="overflow-hidden group text-black">
                   <div className="relative">
-                    <Image
+                    <Image 
                       src={service.image}
                       alt={service.title}
                       width={400}
@@ -326,11 +327,11 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
-        <div className=" text-center">
+      <section className="container  mx-auto ">
+        <div className=" text-center max-w-2xl mx-auto">
           <h1 className="font-bold text-3xl text-purple-700">Three Steps to a Cleaner Home</h1>
           <p className="text-gray-700 text-2xl">…easy as 1-2-3</p></div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center px-4 md:px-16 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-center px-4 md:px-4 py-10">
           {/* Step 1 */}
           <div className="flex flex-col items-center">
             <div className="relative">
@@ -364,11 +365,15 @@ export default function Home() {
       </section>
 
       <div className="border-t border-gray-300 mx-8"></div>
+    
+      <div className="container mx-auto">
+        <Blog />
+      </div>
 
       <section id="testimonials" className="py-10 bg-secondary/20">
-        <div className="container mx-auto px-4">
+        <div className="px-4 container mx-auto">
           <motion.div
-            className="max-w-2xl mx-auto text-center mb-4"
+            className="mx-auto text-center container mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -412,11 +417,13 @@ export default function Home() {
         </button>
         </Link>
         <div className="mt-2 text-sm text-gray-100">
-          <p className="text-gray-700 container px-10 lg:px-40">We’re your trusted local cleaning experts, dedicated to providing thorough and reliable service every time.
+          <p className="text-gray-700 container px-10 lg:px-40 mx-auto">We’re your trusted local cleaning experts, dedicated to providing thorough and reliable service every time.
             Call for a Free Estimate today! CityHousekeeping is ready to make your home shine: 020-33-22-23-23.</p>
         </div>
       </div>
-    </div>
+      </div>
+    
+   
   );
 }
 

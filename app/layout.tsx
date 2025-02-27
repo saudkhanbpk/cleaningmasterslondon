@@ -10,7 +10,7 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaPinterest
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'CleanPro - Professional Cleaning Services',
+  title: 'CleaningMastersLondon - Professional Cleaning Services',
   description: 'Professional cleaning services for homes and businesses',
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Navbar />
-        <main className="min-h-screen pt-16">
+        <main className="min-h-screen">
           {children}
         </main>
         <Footer />

@@ -1,12 +1,11 @@
 "use client";
 
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image"; 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function Blog() {
   const router = useRouter();
@@ -66,67 +65,19 @@ export default function Blog() {
       category: "Specialized Cleaning",
       image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=400",
     },
-    {
-      id: 7,
-      title: "Eco-Friendly Cleaning: A Guide to Sustainable Practices",
-      excerpt: "Explore environmentally conscious products that are both effective and sustainable...",
-      date: "March 10, 2024",
-      readTime: "6 min read",
-      category: "Green Cleaning",
-      image: "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-      id: 8,
-      title: "The Ultimate Guide to Move-In/Move-Out Cleaning",
-      excerpt: "Everything you need to know about preparing your home for moving in or out...",
-      date: "March 3, 2024",
-      readTime: "5 min read",
-      category: "Specialized Cleaning",
-      image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=400",
-    },
   ];
 
-  // State to handle pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
-
-  // Logic for pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
-
-  const totalPages = Math.ceil(blogPosts.length / postsPerPage);
-
-  // Handle Next and Previous buttons
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handlePageClick = (page: number) => {
-    setCurrentPage(page);
-  };
-
   return (
-    <div className="container mx-auto px-4 py-20">
-      {/* Header */}
-      <div className="max-w-2xl mx-auto text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-purple-700">Cleaning Tips & Insights</h1>
+    <div className=" px-4 py-20">
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-bold mb-4 text-purple-700">Cleaning Tips & Insights</h1>
         <p className="text-gray-800">
           Expert advice, cleaning guides, and industry insights to help you maintain a cleaner space
         </p>
       </div>
 
-      {/* Blog Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {currentPosts.map((post, index) => (
+        {blogPosts.map((post, index) => (
           <motion.div
             key={post.id}
             initial={{ opacity: 0, y: 20 }}
@@ -165,41 +116,6 @@ export default function Blog() {
             </Card>
           </motion.div>
         ))}
-      </div>
-
-      {/* Pagination Buttons */}
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <Button
-          variant="outline"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className="rounded-full px-4 py-2"
-        >
-          Previous
-        </Button>
-
-        {/* Page Numbers */}
-        <div className="flex space-x-2">
-          {[...Array(totalPages)].map((_, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              onClick={() => handlePageClick(index + 1)}
-              className={`px-4 py-2 rounded-full ${currentPage === index + 1 ? 'bg-purple-700 text-white' : 'text-gray-700'}`}
-            >
-              {index + 1}
-            </Button>
-          ))}
-        </div>
-
-        <Button
-          variant="outline"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="rounded-full px-4 py-2"
-        >
-          Next
-        </Button>
       </div>
     </div>
   );

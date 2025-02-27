@@ -119,7 +119,7 @@ export default function domesticCleaning() {
           Carpet Cleaning
         </h1>
       </div>
-      <div className="container px-10 py-4">
+      <div className=" px-4 mx-auto container py-4">
         <h1 className="text-purple-700 text-2xl mt-80">
         Current Offer:
         </h1>
@@ -212,7 +212,7 @@ export default function domesticCleaning() {
         <h1 className="text-3xl font-bold text-center text-purple-700 mb-6">
         Our Cleaning Prices
       </h1>
-      <div className="flex flex-col md:flex-row gap-6 p-6 items-start">
+      <div className="flex flex-col md:flex-row gap-3 items-start">
           {pricingData.map((category, index) => (
             <div key={index} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden w-full md:w-1/3 flex flex-col">
               <h2 className="text-xl font-bold text-purple-700 text-center p-4">{category.title}</h2>
@@ -253,7 +253,7 @@ export default function domesticCleaning() {
             <span>with a spotless home to enjoy.</span>
           </p>
         </div>
-       <div className="container px-10 py-4">
+        <div className=" px-4 mx-auto container py-4">
        <h2 className="text-2xl font-bold text-purple-700 mb-6">
         Frequently Asked Questions
       </h2>

@@ -58,7 +58,7 @@ export default function windowCleaning() {
                     Window Cleaning
                 </h1>
             </div>
-            <div className="container px-10 py-4">
+            <div className=" px-4 mx-auto container py-4">
 
                 <div className="grid md:grid-cols-2 gap-8 items-center mt-80">
                     {/* Left Content */}
