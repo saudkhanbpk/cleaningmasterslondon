@@ -66,22 +66,7 @@ export default function RootLayout({
           >
             <FaTwitter size={24} />
           </a>
-          <a 
-            href="https://linkedin.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="p-2 bg-blue-800 text-white rounded-full shadow-md hover:bg-blue-900 transition-all"
-          >
-            <FaLinkedin size={24} />
-          </a>
-          <a 
-            href="https://pinterest.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="p-2 bg-red-600 text-white rounded-full shadow-md hover:bg-red-700 transition-all"
-          >
-            <FaPinterest size={24} />
-          </a>
+          
         </div>
       </body>
     </html>

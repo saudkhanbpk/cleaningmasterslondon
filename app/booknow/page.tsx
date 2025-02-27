@@ -30,7 +30,7 @@ export default function Quote() {
   const services = [
     {
       title: "Domestic Cleaning",
-      price: "From $100",
+      price: "From €100",
       features: [
         "General home cleaning",
         "Kitchen & bathroom sanitation",
@@ -42,7 +42,7 @@ export default function Quote() {
     },
     {
       title: "End of Tenancy Cleaning",
-      price: "From $250",
+      price: "From €250",
       features: [
         "Deep cleaning of entire property",
         "Appliance cleaning",
@@ -54,7 +54,7 @@ export default function Quote() {
     },
     {
       title: "Carpet Cleaning",
-      price: "From $150",
+      price: "From €150",
       features: [
         "Deep stain removal",
         "Steam cleaning",
@@ -66,7 +66,7 @@ export default function Quote() {
     },
     {
       title: "Window Cleaning",
-      price: "From $80",
+      price: "From €80",
       features: [
         "Interior & exterior glass cleaning",
         "Streak-free finish",
@@ -78,7 +78,7 @@ export default function Quote() {
     },
     {
       title: "Gardening Cleaning",
-      price: "From $120",
+      price: "From €120",
       features: [
         "Lawn mowing & edging",
         "Weed removal",
@@ -90,7 +90,7 @@ export default function Quote() {
     },
     {
       title: "Office Cleaning",
-      price: "From $200",
+      price: "From €200",
       features: [
         "Workstation & desk cleaning",
         "Restroom sanitation",
@@ -107,7 +107,7 @@ export default function Quote() {
     <div className="px-4 py-20 container mx-auto">
       <div className=" mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 text-purple-700">Get Your Free Cleaning Quote</h1>
+          <h1 className="text-4xl font-bold mb-4 text-purple-700">Book Your Cleaning Today!</h1>
           <p className="text-xl text-gray-800">
             Tell us about your cleaning needs and we will provide a customized quote
           </p>
@@ -221,9 +221,12 @@ export default function Quote() {
           onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
         >
           <option value="">Select Service Type</option>
-          <option value="regular">Regular Cleaning</option>
-          <option value="deep">Deep Cleaning</option>
-          <option value="movein">Move In/Out Cleaning</option>
+          <option value="domestic-cleaningar">Domestic Cleaning</option>
+          <option value="end-of-tenancy">End of Tenancy</option>
+          <option value="carpet-cleaning">Carpet Cleaning</option>
+          <option value="office-cleaning">Office Cleaning</option>
+          <option value="window-cleaning">Window Cleaning</option>
+          <option value="gardening">Gardening</option>
         </select>
       </div>
 
@@ -266,7 +269,7 @@ export default function Quote() {
       </div>
     </div>
 
-    <Button type="submit" className="w-full bg-purple-700 rounded-xl text-white p-3">Get Quote</Button>
+    <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-xl  text-white p-3">Book Now</Button>
   </form>
 </Card>
 

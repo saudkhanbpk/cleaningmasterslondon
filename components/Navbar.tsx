@@ -33,8 +33,8 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "Services", dropdown: true }, 
     { label: "Blog", href: "/blog" },
-    { label: "Quote", href: "/quote" },
     { label: "Contact", href: "/contact" },
+    { label: "Book Now", href: "/booknow" },
   ];
 
   const services = [

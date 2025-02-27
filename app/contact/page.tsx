@@ -229,7 +229,7 @@ const Contact: React.FC = () => {
                 )}
 
                 {/* Submit Button */}
-                <Button type="submit" className="w-full bg-purple-700 hover:bg-purple-800 text-white"disabled={loading}>
+                <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-xl text-white"disabled={loading}>
                   {loading ? "Sending..." : "Send Message"}
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>

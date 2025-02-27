@@ -205,16 +205,16 @@ export default function Home() {
             <Link href="model">
               <Button
                 size="lg"
-                className="bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-50 text-white font-bold rounded-xl"
                 data-aos="fade-right"
               >
-                Book your Clean
+                Get a Quote
               </Button>
             </Link>
             <Link href="contact">
               <Button
                 size="lg"
-                className="bg-purple-700 hover:bg-purple-800 text-white font-bold rounded-xl"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white font-bold rounded-xl"
                 data-aos="fade-left"
               >
                 Contact Us
@@ -315,7 +315,7 @@ export default function Home() {
               >
                 <Card className="p-6 hover:shadow-lg transition-shadow h-[200px] bg-gradient-to-r from-purple-500 to-blue-500 text-white">
                   <div className="flex flex-col items-center text-center">
-                    <div className="">{feature.icon}</div>
+                    <div className="text-yellow-400">{feature.icon}</div>
                     <h3 className="text-xl font-semibold mb-2">
                       {feature.title}
                     </h3>
@@ -327,7 +327,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container  mx-auto ">
+      <section className="container  mx-auto mb-4">
         <div className=" text-center max-w-2xl mx-auto">
           <h1 className="font-bold text-3xl text-purple-700">Three Steps to a Cleaner Home</h1>
           <p className="text-gray-700 text-2xl">…easy as 1-2-3</p></div>
@@ -363,8 +363,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+    
+  
+      <Link href="/booknow" className=" flex justify-center">
+        <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
+          Book Cleaning Today
+        </button>
+        </Link>
 
-      <div className="border-t border-gray-300 mx-8"></div>
+      <div className="border-t border-gray-300 mt-4 mx-8"></div>
     
       <div className="container mx-auto">
         <Blog />
@@ -411,7 +418,7 @@ export default function Home() {
         </div>
       </section>
       <div className="py-6 text-gray-100 text-center">
-      <Link href="/model">
+      <Link href="/booknow">
         <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
           Book Cleaning Today
         </button>

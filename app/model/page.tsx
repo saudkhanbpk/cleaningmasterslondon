@@ -601,9 +601,9 @@ const handleVerificationCode = (index: number, value: string) => {
             onInteractOutside={(e) => e.preventDefault()}
           >
             <div className="flex justify-between items-center mb-6">
-              <div className="w-full bg-gray-200 h-3 rounded-full text-center">
+              <div className="w-full bg-gray-200 h-2 rounded-full text-center">
                 <div
-                  className="bg-purple-700 h-3 border border-purple-800"
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 h-2 border"
                   style={{ width: `${(step / 15) * 100}%` }}
                 />
               </div>
@@ -1419,9 +1419,13 @@ const handleVerificationCode = (index: number, value: string) => {
                 <div className="flex flex-col items-start gap-4 mt-4">
                   {/* Radio Button Options */}
                   {[
-                    "Standard cleaning",
-                    "Deep cleaning",
-                    "Move-out cleaning",
+                    "Domestic cleaning",
+                    "End of cleaning",
+                    "Carpet cleaning",
+                    "Office cleaning",
+                    "Window cleaning",
+                    "Gardening",
+
                   ].map((option, index) => (
                     <label key={index} className="flex items-center space-x-2">
                       <input
@@ -1537,7 +1541,7 @@ const handleVerificationCode = (index: number, value: string) => {
             <div className="mt-8 flex justify-between space-x-4">
               {step > 1 ? (
                 <button
-                  className="px-6 py-3 bg-gray-300 rounded-md text-gray-700 hover:bg-gray-400"
+                  className="px-6 py-3 rounded-xl bg-gray-300  text-gray-700 hover:bg-gray-400"
                   onClick={prevStep}
                   disabled={loading}
                 >
@@ -1545,7 +1549,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 </button>
               ) : (
                 <button
-                  className="px-6 py-3 bg-gray-300 rounded-md text-gray-700 cursor-not-allowed opacity-50"
+                  className="px-6 py-3 bg-gray-300 rounded-xl text-gray-700 cursor-not-allowed opacity-50"
                   disabled
                 >
                   Back
@@ -1554,7 +1558,7 @@ const handleVerificationCode = (index: number, value: string) => {
 
               {step === 5 ? (
                 <button
-                  className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 mt-4"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white mt-4"
                   onClick={nextStep}
                   disabled={loading}
                 >
@@ -1589,7 +1593,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 </button>
               ) : step < 15 ? (
                 <button
-                  className="px-6 py-3 bg-purple-700 text-white rounded-md hover:bg-purple-800 flex items-center justify-center"
+                  className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white rounded-xl  flex items-center justify-center"
                   onClick={nextStep}
                   disabled={loading}
                 >
@@ -1622,7 +1626,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 </button>
               ) : (
                 <button
-                  className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600"
+                  className="px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600"
                   onClick={handleSubmitForm}
                   disabled={loading}
                 >

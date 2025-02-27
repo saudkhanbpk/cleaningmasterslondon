@@ -108,7 +108,7 @@ export default function domesticCleaning() {
                 </div>
                 <div className="pt-4 flex justify-center items-center flex-col">
                     <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
-                    <Link href="/model">
+                    <Link href="/booknow">
                         <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
                             <span>Book your Cleaning Today</span>
                         </button>

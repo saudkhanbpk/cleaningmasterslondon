@@ -31,7 +31,7 @@ export default function Footer() {
                 // { name: "Reviews", path: "/reviews" },
                 { name: "Blog", path: "/blog" },
                 { name: "Contact", path: "/contact" },
-                { name: "Quotes", path: "/quote" }
+                { name: "Book Now", path: "/booknow" }
               ].map((link, index) => (
                 <li key={index}>
                   <Link
@@ -110,22 +110,7 @@ export default function Footer() {
                 >
                   <FaTwitter className="h-5 w-5" />
                 </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-blue-800 text-white rounded-full shadow-md hover:bg-blue-900 transition-all"
-                >
-                  <FaLinkedinIn className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://pinterest.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-red-600 text-white rounded-full shadow-md hover:bg-red-700 transition-all"
-                >
-                  <FaPinterestP className="h-5 w-5" />
-                </a>
+                
               </div>
             </div>
           </div>
