@@ -80,8 +80,8 @@ export default function Home() {
       image: require("@/assets/gardening/hero.jpg"),
     },
   ];
-  
-  
+
+
 
   const sliderSettings = {
     infinite: true,
@@ -202,23 +202,21 @@ export default function Home() {
             Professional cleaning services for homes and businesses
           </p>
           <div className="flex justify-center space-x-4">
-            <Link href="model">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-50 text-white font-bold rounded-xl"
-                data-aos="fade-right"
-              >
-                Get a Quote
-              </Button>
+
+            <Link href="/model">
+            <button className="font-bold text-base text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full"
+              // data-aos="fade-right"
+            >
+            Get a Quote
+          </button>
+
             </Link>
-            <Link href="contact">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white font-bold rounded-xl"
-                data-aos="fade-left"
-              >
-                Contact Us
-              </Button>
+            <Link href="/contact">
+            <button className="font-bold text-base text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full"
+            // data-aos="fade-left"
+            >
+            Contact US
+          </button>
             </Link>
           </div>
         </motion.div>
@@ -249,7 +247,7 @@ export default function Home() {
               >
                 <Card className="overflow-hidden group text-black">
                   <div className="relative">
-                    <Image 
+                    <Image
                       src={service.image}
                       alt={service.title}
                       width={400}
@@ -305,26 +303,27 @@ export default function Home() {
             </motion.p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <Card className="p-6 hover:shadow-lg transition-shadow h-[200px] bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-                  <div className="flex flex-col items-center text-center">
-                    <div className="text-yellow-400">{feature.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      {feature.title}
-                    </h3>
-                    <p>{feature.description}</p>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+  {features.map((feature, index) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+    >
+      <Card
+        className="p-6 hover:shadow-lg transition-all duration-300 h-[200px] bg-gradient-to-r from-purple-500 to-blue-500 text-white transform hover:translate-y-[-8px] hover:scale-105"
+      >
+        <div className="flex flex-col items-center text-center">
+          <div className="text-yellow-400">{feature.icon}</div>
+          <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+          <p>{feature.description}</p>
+        </div>
+      </Card>
+    </motion.div>
+  ))}
+</div>
+
         </div>
       </section>
       <section className="container  mx-auto mb-4">
@@ -363,74 +362,87 @@ export default function Home() {
           </div>
         </div>
       </section>
-    
-  
+
+
       <Link href="/booknow" className=" flex justify-center">
         <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
           Book Cleaning Today
         </button>
-        </Link>
+      </Link>
 
       <div className="border-t border-gray-300 mt-4 mx-8"></div>
-    
+
       <div className="container mx-auto">
         <Blog />
       </div>
 
       <section id="testimonials" className="py-10 bg-secondary/20">
-        <div className="px-4 container mx-auto">
-          <motion.div
-            className="mx-auto text-center container mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl text-purple-700 font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-gray-600">
-              Do not just take our word for it - hear from our satisfied customers
-            </p>
-          </motion.div>
+  <div className="px-4 container mx-auto">
+    <motion.div
+      className="mx-auto text-center container mb-4"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className="text-3xl text-purple-700 font-bold mb-4">What Our Clients Say</h2>
+      <p className="text-gray-600">
+        Do not just take our word for it - hear from our satisfied customers
+      </p>
+    </motion.div>
 
-          <Slider {...sliderSettings}>
-            {testimonials.map((testimonial, index) => (
-              <div key={testimonial.id} className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl flex flex-col items-center text-center">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={`Customer ${testimonial.name}`}
-                    className="object-cover rounded-full border-4 border-purple-700 w-20 h-20"
-                  />
-                </div>
-                <div className="flex mb-4 justify-center">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <FaStar key={i} className="text-yellow-400 w-5 h-5" />
-                  ))}
-                </div>
-                <p className="mb-4">{testimonial.comment}</p>
-                <div className="font-bold">
-                  <p className="pt-2">{testimonial.role}</p>
-                  <p className="pt-2">{testimonial.name}</p>
-                </div>
-              </div>
+    <Slider {...sliderSettings}>
+      {testimonials.map((testimonial, index) => (
+        <motion.div
+          key={testimonial.id}
+          className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl flex flex-col items-center text-center"
+          whileHover={{
+            scale: 1.05, // This creates the zoom-in effect
+            transition: { type: "spring", stiffness: 300, damping: 20 } // Smooth zoom-in effect with spring transition
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: index * 0.2, duration: 0.5 }}
+        >
+          <div className="flex justify-center mb-4">
+            <Image
+              src={testimonial.image}
+              alt={`Customer ${testimonial.name}`}
+              className="object-cover rounded-full border-4 border-purple-700 w-20 h-20"
+            />
+          </div>
+          <div className="flex mb-4 justify-center">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <FaStar key={i} className="text-yellow-400 w-5 h-5" />
             ))}
-          </Slider>
-        </div>
-      </section>
+          </div>
+          <p className="mb-4">{testimonial.comment}</p>
+          <div className="font-bold">
+            <p className="pt-2">{testimonial.role}</p>
+            <p className="pt-2">{testimonial.name}</p>
+          </div>
+        </motion.div>
+      ))}
+    </Slider>
+  </div>
+</section>
+
+
+
       <div className="py-6 text-gray-100 text-center">
-      <Link href="/booknow">
-        <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
-          Book Cleaning Today
-        </button>
+        <Link href="/booknow">
+          <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
+            Book Cleaning Today
+          </button>
         </Link>
         <div className="mt-2 text-sm text-gray-100">
           <p className="text-gray-700 container px-10 lg:px-40 mx-auto">We’re your trusted local cleaning experts, dedicated to providing thorough and reliable service every time.
             Call for a Free Estimate today! CityHousekeeping is ready to make your home shine: 020-33-22-23-23.</p>
         </div>
       </div>
-      </div>
-    
-   
+    </div>
+
+
   );
 }
 

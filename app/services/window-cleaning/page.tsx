@@ -110,7 +110,6 @@ export default function windowCleaning() {
                         <strong>Customized Cleaning Schedules:</strong> We understand that your cleaning needs may vary. That’s why we offer flexible scheduling options that can be customized to fit your timetable. Whether it’s a one-time cleaning or regular maintenance, we’re here to fit seamlessly into your routine.
                     </li>
                 </ul>
-
                 <h3 className="text-purple-700 text-xl font-bold mb-3">
                     Our services cater to all types of windows, including:
                 </h3>
@@ -140,7 +139,7 @@ export default function windowCleaning() {
                 <div className="pt-6 flex justify-center items-center flex-col">
                     <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
                     <Link href="/booknow">
-                        <button className="font-bold text-xl text-white bg-purple-700 p-3 hover:bg-purple-800 rounded-full">
+                        <button className="font-bold text-xl text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-50 p-3 rounded-full">
                             <span>Book your Cleaning Today</span>
                         </button>
                     </Link>
@@ -151,7 +150,7 @@ export default function windowCleaning() {
                     </p>
                 </div>
                 <div className="mt-10">
-                    <h2 className="text-purple-700 text-2xl font-bold mb-4">Our Window Cleaning</h2>
+                    <h2 className="text-purple-700 text-2xl font-bold mb-4">Frequently Asked Questions</h2>
                     <div>
                         {faqData.map((faq, index) => (
                             <div key={index} className="border-b border-gray-300">

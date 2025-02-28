@@ -11,6 +11,7 @@ import axios from "axios";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import bgimage from "../../assets/cleaning2.jpeg"
+import { motion } from 'framer-motion';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface emailFormData {
   emailAddress: string;
@@ -44,7 +45,7 @@ export default function ModelPage() {
     emailAddress: "",
     verificationCode: ["", "", "", ""],
   });
-  
+
 
 
   const [formData, setFormData] = useState<FormDataType>({
@@ -144,27 +145,27 @@ export default function ModelPage() {
   };
 
 
-const handleVerificationCode = (index: number, value: string) => {
-  setemailFormData((prev) => {
-    const codeArray = [...prev.verificationCode]; 
+  const handleVerificationCode = (index: number, value: string) => {
+    setemailFormData((prev) => {
+      const codeArray = [...prev.verificationCode];
 
-    if (/^\d$/.test(value)) {
-      codeArray[index] = value;
+      if (/^\d$/.test(value)) {
+        codeArray[index] = value;
 
-      if (index < 3 && value !== "") {
-        const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
-        nextInput?.focus();
+        if (index < 3 && value !== "") {
+          const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
+          nextInput?.focus();
+        }
+      } else if (value === "") {
+        codeArray[index] = "";
       }
-    } else if (value === "") {
-      codeArray[index] = "";
-    }
 
-    return { ...prev, verificationCode: codeArray };
-  });
-};
+      return { ...prev, verificationCode: codeArray };
+    });
+  };
 
-  
-  
+
+
 
   const handleAdditionalDetails = (
     field: keyof FormDataType["additionalDetails"],
@@ -274,7 +275,7 @@ const handleVerificationCode = (index: number, value: string) => {
       setLoading(true);
       setemailFormData((prev) => ({
         ...prev,
-        verificationCode: ["", "", "", ""], 
+        verificationCode: ["", "", "", ""],
       }));
       const response = await axios.post(`${API_BASE_URL}/api/v1/create-user`, {
         emailAddress: emailFormData.emailAddress,
@@ -352,7 +353,7 @@ const handleVerificationCode = (index: number, value: string) => {
           console.error("Error sending OTP:", err);
           toast.error(
             err.response?.data?.message ||
-              "An error occurred while sending OTP."
+            "An error occurred while sending OTP."
           );
         }
       }
@@ -364,11 +365,11 @@ const handleVerificationCode = (index: number, value: string) => {
           toast.error("Please enter a valid 4-digit OTP.");
           return;
         }
-        
+
         try {
           setLoading(true);
 
-          
+
 
           const response = await axios.post(
             `${API_BASE_URL}/api/v1/verify-otp`,
@@ -377,7 +378,7 @@ const handleVerificationCode = (index: number, value: string) => {
               otp: emailFormData.verificationCode.join(""), // Convert array to string
             }
           );
-          
+
           if (response.data.success) {
             toast.success(response.data.message);
             setisVerified(true);
@@ -581,9 +582,12 @@ const handleVerificationCode = (index: number, value: string) => {
     }
   };
 
+
+  const [open, setOpen] = useState(false);
+
   const prevStep = () => setStep((prev) => prev - 1);
   return (
-    <div className="flex justify-center items-center min-h-screen mt-16">
+    <div className="flex justify-center items-center min-h-screen">
       <Dialog.Root
         open={step > 0}
         modal={true}
@@ -594,9 +598,9 @@ const handleVerificationCode = (index: number, value: string) => {
         }}
       >
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0"  style={{ backgroundImage: `url(${bgimage.src})`, backgroundSize: 'cover',  backgroundPosition: 'center' }}  />
-          <Dialog.Content 
-            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-lg shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl max-h-[530px] overflow-y-auto"
+          <Dialog.Overlay className="fixed inset-0" style={{ backgroundImage: `url(${bgimage.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <Dialog.Content
+            className="fixed top-[55%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-xl shadow-lg w-11/12 max-w-md sm:max-w-lg md:max-w-xl max-h-[530px] overflow-y-auto"
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
           >
@@ -607,17 +611,45 @@ const handleVerificationCode = (index: number, value: string) => {
                   style={{ width: `${(step / 15) * 100}%` }}
                 />
               </div>
-              <Dialog.Close asChild>
-                <button
-                  className="text-gray-600 hover:text-gray-800"
-                  onClick={goToRoot}
-                >
-                  <XIcon className="h-6 w-6" />
-                </button>
-              </Dialog.Close>
+              <button
+                className="text-gray-600 hover:text-gray-800"
+
+                onClick={() => setOpen(true)}
+              >
+                <XIcon className="h-6 w-6" />
+              </button>
             </div>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className="absolute z-50 md:ml-16 max-w-lg border border-gray-200 shadow-lg flex flex-col gap-4 items-center justify-center bg-gray-100 py-8 px-6 rounded-xl"
+              >
+                <h2 className="text-2xl text-gray-800 font-semibold mb-4">Are you sure you want to close?</h2>
+
+                <div className="space-x-4">
+                  <button
+                    className="bg-red-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+                    onClick={goToRoot}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-green-700 transition-all duration-300 ease-in-out transform hover:scale-105"
+                    onClick={() => setOpen(false)}
+                  >
+                    No
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+
+
+
             {step === 1 && (
-               <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What is Your Name?
                 </h2>
@@ -634,9 +666,8 @@ const handleVerificationCode = (index: number, value: string) => {
                     type="text"
                     required
                     placeholder="Please Enter Your Name"
-                    className={`p-3 border rounded-md w-full ${
-                      errors.name ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`p-3 border rounded-xl w-full ${errors.name ? "border-red-500" : "border-gray-300"
+                      }`}
                     value={formData.name}
                     onClick={() => {
                       setErrors((prev) => ({ ...prev, name: "" }));
@@ -644,11 +675,11 @@ const handleVerificationCode = (index: number, value: string) => {
                     onChange={(e) => handleBasicInput("name", e.target.value)}
                   />
                 </div>
-                </div>
+              </div>
             )}
 
             {step === 2 && (
-             <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Where do you need the cleaner?
                 </h2>
@@ -666,9 +697,8 @@ const handleVerificationCode = (index: number, value: string) => {
                     type="text"
                     required
                     placeholder="Please enter Your Address"
-                    className={`p-3 border rounded-md w-full ${
-                      errors.location ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`p-3 border rounded-xl w-full ${errors.location ? "border-red-500" : "border-gray-300"
+                      }`}
                     value={formData.location}
                     onClick={() => {
                       setErrors((prev) => ({ ...prev, location: "" }));
@@ -704,11 +734,10 @@ const handleVerificationCode = (index: number, value: string) => {
                       maxLength={10}
                       required
                       placeholder="Pleae Enter Your Phone Number"
-                      className={`p-3 pl-16 border rounded-md w-full ${
-                        errors.phoneNumber
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-3 pl-16 border rounded-xl w-full ${errors.phoneNumber
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.phoneNumber}
                       onClick={() => {
                         setErrors((prev) => ({ ...prev, phoneNumber: "" }));
@@ -729,7 +758,7 @@ const handleVerificationCode = (index: number, value: string) => {
               </div>
             )}
             {step === 4 && (
-             <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What is Your Email Address?
                 </h2>
@@ -748,9 +777,8 @@ const handleVerificationCode = (index: number, value: string) => {
                     type="text"
                     required
                     placeholder="Enter your Email Address"
-                    className={`p-3 border rounded-md w-full ${
-                      errors.emailAddress ? "border-red-500" : "border-gray-300"
-                    }`}
+                    className={`p-3 border rounded-xl w-full ${errors.emailAddress ? "border-red-500" : "border-gray-300"
+                      }`}
                     value={emailFormData.emailAddress}
                     onClick={() => {
                       setErrors((prev) => ({ ...prev, emailAddress: "" }));
@@ -763,56 +791,56 @@ const handleVerificationCode = (index: number, value: string) => {
                 </div>
               </div>
             )}
-           {step === 5 && (
-  <div data-aos="flip-left" data-aos-duration="1500">
-    <h2 className="text-xl font-semibold text-gray-800 text-center">
-      Confirm Your Phone Number
-    </h2>
-    <p className="text-sm text-gray-600 mb-3 text-center">
-      {isVerified
-        ? "Phone number verified ✅"
-        : `Enter the OTP sent to ${emailFormData.emailAddress}`}
-    </p>
-    <div className="flex gap-2 justify-center">
-      {[0, 1, 2, 3].map((index) => (
-        <input
-          key={index}
-          type="text"
-          maxLength={1}
-          className="w-12 h-12 text-center text-lg border border-gray-400 rounded-md"
-          value={emailFormData.verificationCode[index] || ""}
-          onChange={(e) => handleVerificationCode(index, e.target.value)}
-          id={`otp-${index}`}
-          readOnly={isVerified}
-        />
-      ))}
-    </div>
+            {step === 5 && (
+              <div data-aos="flip-left" data-aos-duration="1500">
+                <h2 className="text-xl font-semibold text-gray-800 text-center">
+                  Confirm Your Phone Number
+                </h2>
+                <p className="text-sm text-gray-600 mb-3 text-center">
+                  {isVerified
+                    ? "Phone number verified ✅"
+                    : `Enter the OTP sent to ${emailFormData.emailAddress}`}
+                </p>
+                <div className="flex gap-2 justify-center">
+                  {[0, 1, 2, 3].map((index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength={1}
+                      className="w-12 h-12 text-center text-lg border border-gray-400 rounded-xl"
+                      value={emailFormData.verificationCode[index] || ""}
+                      onChange={(e) => handleVerificationCode(index, e.target.value)}
+                      id={`otp-${index}`}
+                      readOnly={isVerified}
+                    />
+                  ))}
+                </div>
 
-    {!isVerified && (
-      <p className="text-sm text-gray-600 text-center mt-4">
-        Did not receive a code?{" "}
-        <span
-          onClick={resendOtp}
-          className="text-blue-500 cursor-pointer hover:underline"
-        >
-          Resend
-        </span>{" "}
-        or{" "}
-        <span
-          className="text-blue-500 cursor-pointer hover:underline"
-          onClick={() => setStep(4)}
-        >
-          Change Email
-        </span>
-      </p>
-    )}
-  </div>
-)}
+                {!isVerified && (
+                  <p className="text-sm text-gray-600 text-center mt-4">
+                    Did not receive a code?{" "}
+                    <span
+                      onClick={resendOtp}
+                      className="text-blue-500 cursor-pointer hover:underline"
+                    >
+                      Resend
+                    </span>{" "}
+                    or{" "}
+                    <span
+                      className="text-blue-500 cursor-pointer hover:underline"
+                      onClick={() => setStep(4)}
+                    >
+                      Change Email
+                    </span>
+                  </p>
+                )}
+              </div>
+            )}
 
 
             {step === 6 && (
               <div data-aos="flip-left" data-aos-duration="1500">
-                  <h2 className="text-xl font-semibold text-gray-800 text-center">
+                <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How many reception rooms need cleaning?
                 </h2>
                 <p className="text-sm text-gray-600 text-center">
@@ -832,7 +860,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                        className="h-4 w-4 text-blue-500"
                         checked={formData.receptionRooms.selected === option}
                         onClick={() => setErrors({})} // Clear errors when selecting any option
                         onChange={() =>
@@ -862,11 +890,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.receptionRoomsOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.receptionRoomsOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.receptionRooms.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -896,10 +923,10 @@ const handleVerificationCode = (index: number, value: string) => {
                 {/* Show Error at the Top for Selection or Other Input Validation */}
                 {(errors.cleaningFrequency ||
                   errors.cleaningFrequencyOther) && (
-                  <p className="text-red-500 text-sm text-center mt-2">
-                    {errors.cleaningFrequency || errors.cleaningFrequencyOther}
-                  </p>
-                )}
+                    <p className="text-red-500 text-sm text-center mt-2">
+                      {errors.cleaningFrequency || errors.cleaningFrequencyOther}
+                    </p>
+                  )}
 
                 <div className="mt-4 w-full">
                   <div className="flex flex-col items-start gap-4 mt-4">
@@ -918,7 +945,7 @@ const handleVerificationCode = (index: number, value: string) => {
                       >
                         <input
                           type="radio"
-                          className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                          className="h-4 w-4 text-blue-500"
                           checked={
                             formData.cleaningFrequency.selected === option
                           }
@@ -950,11 +977,10 @@ const handleVerificationCode = (index: number, value: string) => {
                       <input
                         type="text"
                         placeholder="Please specify"
-                        className={`p-2 border rounded-md w-full ${
-                          errors.cleaningFrequencyOther
-                            ? "border-red-500"
-                            : "border-gray-300"
-                        }`}
+                        className={`p-2 border rounded-md w-full ${errors.cleaningFrequencyOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                          }`}
                         value={formData.cleaningFrequency.other}
                         onClick={() =>
                           setErrors((prev) => ({
@@ -1025,7 +1051,7 @@ const handleVerificationCode = (index: number, value: string) => {
             )}
 
             {step === 9 && (
-               <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   How many bedroom(s) need cleaning?
                 </h2>
@@ -1058,7 +1084,7 @@ const handleVerificationCode = (index: number, value: string) => {
                       >
                         <input
                           type="radio"
-                          className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                          className="h-4 w-4 text-blue-500"
                           checked={formData.bedrooms.selected === option}
                           onClick={() => setErrors({})} // Clear errors when selecting an option
                           onChange={() =>
@@ -1086,11 +1112,10 @@ const handleVerificationCode = (index: number, value: string) => {
                       <input
                         type="text"
                         placeholder="Please specify"
-                        className={`p-2 border rounded-md w-full ${
-                          errors.bedroomsOther
-                            ? "border-red-500"
-                            : "border-gray-300"
-                        }`}
+                        className={`p-2 border rounded-md w-full ${errors.bedroomsOther
+                          ? "border-red-500"
+                          : "border-gray-300"
+                          }`}
                         value={formData.bedrooms.other}
                         onClick={() =>
                           setErrors((prev) => ({ ...prev, bedroomsOther: "" }))
@@ -1106,7 +1131,7 @@ const handleVerificationCode = (index: number, value: string) => {
             )}
 
             {step === 10 && (
-               <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What type of property needs cleaning?
                 </h2>
@@ -1129,7 +1154,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                        className="h-4 w-4 text-blue-500"
                         checked={formData.propertyType.selected === option}
                         onClick={() => setErrors({})} // Clear errors when selecting an option
                         onChange={() =>
@@ -1152,16 +1177,15 @@ const handleVerificationCode = (index: number, value: string) => {
                     <span className="text-sm text-gray-600">Other</span>
                   </label>
 
-                
+
                   {formData.propertyType.showOther && (
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.propertyTypeOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.propertyTypeOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.propertyType.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -1203,7 +1227,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     <label key={index} className="flex items-center space-x-2">
                       <input
                         type="radio"
-                        className="h-4 w-4 text-blue-500 border-2 rounded-full appearance-none checked:bg-blue-500 border-gray-400"
+                        className="h-4 w-4 text-blue-500"
                         checked={formData.hiringDecision.selected === option}
                         onClick={() => setErrors({})} // Clear errors when selecting an option
                         onChange={() =>
@@ -1233,11 +1257,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.hiringDecisionOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.hiringDecisionOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.hiringDecision.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -1255,7 +1278,7 @@ const handleVerificationCode = (index: number, value: string) => {
             )}
 
             {step === 12 && (
-               <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   Will you be supplying cleaning materials/equipment?
                 </h2>
@@ -1263,10 +1286,10 @@ const handleVerificationCode = (index: number, value: string) => {
                 {/* Show Error at the Top for Selection or Other Input Validation */}
                 {(errors.cleaningMaterials ||
                   errors.cleaningMaterialsOther) && (
-                  <p className="text-red-500 text-sm text-center mt-2">
-                    {errors.cleaningMaterials || errors.cleaningMaterialsOther}
-                  </p>
-                )}
+                    <p className="text-red-500 text-sm text-center mt-2">
+                      {errors.cleaningMaterials || errors.cleaningMaterialsOther}
+                    </p>
+                  )}
 
                 <div className="flex flex-col items-start gap-4 mt-4">
                   {/* Radio Button Options */}
@@ -1308,11 +1331,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.cleaningMaterialsOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.cleaningMaterialsOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.cleaningMaterials.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -1326,7 +1348,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-                </div>
+              </div>
             )}
 
             {step === 13 && (
@@ -1382,11 +1404,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.currentCleanerOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.currentCleanerOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.currentCleaner.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -1404,7 +1425,7 @@ const handleVerificationCode = (index: number, value: string) => {
             )}
 
             {step === 14 && (
-                <div data-aos="flip-left" data-aos-duration="1500">
+              <div data-aos="flip-left" data-aos-duration="1500">
                 <h2 className="text-xl font-semibold text-gray-800 text-center">
                   What type of cleaning would you like?
                 </h2>
@@ -1457,11 +1478,10 @@ const handleVerificationCode = (index: number, value: string) => {
                     <input
                       type="text"
                       placeholder="Please specify"
-                      className={`p-2 border rounded-md w-full ${
-                        errors.cleaningTypeOther
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`p-2 border rounded-md w-full ${errors.cleaningTypeOther
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                       value={formData.cleaningType.other}
                       onClick={() =>
                         setErrors((prev) => ({
@@ -1475,7 +1495,7 @@ const handleVerificationCode = (index: number, value: string) => {
                     />
                   )}
                 </div>
-                </div>
+              </div>
             )}
 
             {step === 15 && (
@@ -1491,7 +1511,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 </p>
 
                 <textarea
-                  className="mt-2 p-2 w-full h-16 border border-gray-300 rounded-md"
+                  className="mt-2 p-2 w-full h-16 border border-gray-300 rounded-xl"
                   placeholder="What would be helpful for the professional to know?"
                   value={formData.additionalDetails.description}
                   onChange={(e) =>
@@ -1506,9 +1526,9 @@ const handleVerificationCode = (index: number, value: string) => {
                   <input
                     type="file"
                     accept="image/*"
-                    className="mt-2 block w-full text-sm text-gray-600
+                    className="mt-2 block w-full rounded-xl  text-sm text-gray-600
           file:mr-4 file:py-2 file:px-4
-          file:rounded-md file:border-0
+          file:rounded-full file:border-0
           file:text-sm file:font-semibold
           file:bg-green-600 file:text-white
           hover:file:bg-green-700"
@@ -1530,8 +1550,8 @@ const handleVerificationCode = (index: number, value: string) => {
                         formData.additionalDetails.image
                       )}
                       alt="Uploaded preview"
-                      width={100} 
-                      height={100} 
+                      width={100}
+                      height={100}
                       className="mt-2 max-w-full h-auto rounded-md border"
                     />
                   </div>
@@ -1543,7 +1563,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 <button
                   className="px-6 py-3 rounded-xl bg-gray-300  text-gray-700 hover:bg-gray-400"
                   onClick={prevStep}
-                  disabled={loading}
+                  disabled={open || loading}
                 >
                   Back
                 </button>
@@ -1560,7 +1580,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 <button
                   className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white mt-4"
                   onClick={nextStep}
-                  disabled={loading}
+                  disabled={open || loading}
                 >
                   {loading ? (
                     <div className="flex items-center">
@@ -1595,7 +1615,7 @@ const handleVerificationCode = (index: number, value: string) => {
                 <button
                   className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 text-white rounded-xl  flex items-center justify-center"
                   onClick={nextStep}
-                  disabled={loading}
+                  disabled={open || loading}
                 >
                   {loading ? (
                     <div className="flex items-center">
@@ -1626,9 +1646,9 @@ const handleVerificationCode = (index: number, value: string) => {
                 </button>
               ) : (
                 <button
-                  className="px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600"
+                  className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700"
                   onClick={handleSubmitForm}
-                  disabled={loading}
+                  disabled={open || loading}
                 >
                   {loading ? (
                     <div className="flex items-center">
