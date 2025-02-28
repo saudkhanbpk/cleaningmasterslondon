@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { MapPin, Mail, Phone, Clock,ArrowRight } from "lucide-react";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
-
+import { useRouter } from "next/navigation";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface FormData {
@@ -31,6 +31,7 @@ const Contact: React.FC = () => {
     email: "",
     message: "",
   });
+  const router=useRouter();
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -91,7 +92,9 @@ const Contact: React.FC = () => {
 
       if (response.data.success) {
         toast.success("Message sent successfully!");
+        router.push('/confrimation');
         setFormData({ name: "", phoneNumber: "", email: "", message: "" });
+        
         setErrors({});
       } else {
         toast.error("Failed to send message.");
@@ -227,8 +230,6 @@ const Contact: React.FC = () => {
                 {errors.message && (
                   <p className="text-red-500 text-sm">{errors.message}</p>
                 )}
-
-                {/* Submit Button */}
                 <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-xl text-white"disabled={loading}>
                   {loading ? "Sending..." : "Send Message"}
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />

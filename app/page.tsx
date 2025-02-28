@@ -397,7 +397,7 @@ export default function Home() {
           key={testimonial.id}
           className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg rounded-xl flex flex-col items-center text-center"
           whileHover={{
-            scale: 1.05, // This creates the zoom-in effect
+            scale: 0.9, 
             transition: { type: "spring", stiffness: 300, damping: 20 } // Smooth zoom-in effect with spring transition
           }}
           initial={{ opacity: 0 }}

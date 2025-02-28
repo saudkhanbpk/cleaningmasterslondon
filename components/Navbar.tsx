@@ -9,7 +9,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
   const [activeService, setActiveService] = useState<string | null>(null);
-  const [isServicesExpanded, setIsServicesExpanded] = useState(false);  // New state to manage Services visibility on mobile
+  const [isServicesExpanded, setIsServicesExpanded] = useState(false);
 
   const pathname = usePathname();
 
@@ -31,10 +31,10 @@ export default function Navbar() {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Services", dropdown: true }, 
+    { label: "Services", dropdown: true },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
-    { label: "Book Now", href: "/booknow" },
+    { label: "Book Now", href: "/booknow", isBookNow: true }, // Add an 'isBookNow' flag
   ];
 
   const services = [
@@ -47,20 +47,19 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed w-full z-50  bg-gray-800 px-2 lg:px-4  transition-all duration-300">
-      <div className="flex items-center justify-between py-1 lg:py-2">
+    <nav className="fixed w-full z-50 bg-gray-800 px-2 lg:px-4 transition-all duration-300">
+      <div className="flex items-center justify-between py-4 lg:py-2">
         <Link href="/">
           <div className="flex items-center space-x-2 cursor-pointer">
             <Sparkles className="h-6 w-6 text-purple-700" />
             <span className="lg:text-xl text-lg font-bold text-white">CleaningMastersLondon</span>
           </div>
         </Link>
-
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center">
           {navItems.map((item) =>
             item.dropdown ? (
-              <div
+              <div 
                 key={item.label}
                 className="relative"
                 onMouseEnter={() => setIsServicesHovered(true)}
@@ -92,6 +91,15 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
+            ) : item.isBookNow ? (
+              <Link
+                key={item.label}
+                href={item.href ?? "#"}
+                className={`text-white text-lg py-1 lg:py-2 px-2 lg:px-4 rounded-full bg-purple-800 animate-pulse transition-all duration-900 ease-in-out hover:bg-purple-800`}
+
+              >
+                {item.label}
+              </Link>
             ) : (
               <Link
                 key={item.label}

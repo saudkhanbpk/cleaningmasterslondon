@@ -10,7 +10,6 @@ import { useState } from "react";
 
 export default function Blog() {
   const router = useRouter();
-
   const blogPosts = [
     {
       id: 1,

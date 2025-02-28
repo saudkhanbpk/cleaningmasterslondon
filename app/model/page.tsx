@@ -626,7 +626,7 @@ export default function ModelPage() {
                 transition={{ duration: 0.5, ease: 'easeOut' }}
                 className="absolute z-50 md:ml-16 max-w-lg border border-gray-200 shadow-lg flex flex-col gap-4 items-center justify-center bg-gray-100 py-8 px-6 rounded-xl"
               >
-                <h2 className="text-2xl text-gray-800 font-semibold mb-4">Are you sure you want to close?</h2>
+                <h2 className="text-2xl text-gray-800 font-semibold mb-4">Are you sure want to close?</h2>
 
                 <div className="space-x-4">
                   <button
