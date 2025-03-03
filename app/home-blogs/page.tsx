@@ -23,7 +23,7 @@ export default function Blog() {
     {
       id: 2,
       title: "The Benefits of Professional Deep Cleaning Services",
-      excerpt: "Learn why professional deep cleaning services are essential for maintaining a healthy and comfortable living environment...",
+      excerpt: "Learn why professional deep cleaning services are essential for maintaining a healthy living environment...",
       date: "March 12, 2024",
       readTime: "4 min read",
       category: "Professional Cleaning",
@@ -68,7 +68,7 @@ export default function Blog() {
   ];
 
   return (
-    <div className=" px-4 py-20">
+    <div className=" px-4 pt-10">
       <div className="text-center mb-12">
         <h1 className="text-3xl font-bold mb-4 text-purple-700">Cleaning Tips & Insights</h1>
         <p className="text-gray-800">

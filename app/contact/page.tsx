@@ -91,8 +91,9 @@ const Contact: React.FC = () => {
       );
 
       if (response.data.success) {
+        router.push('/confirmation');
         toast.success("Message sent successfully!");
-        router.push('/confrimation');
+        
         setFormData({ name: "", phoneNumber: "", email: "", message: "" });
         
         setErrors({});
@@ -175,7 +176,7 @@ const Contact: React.FC = () => {
                       }`}
                       value={formData.phoneNumber}
                       onChange={(e) => {
-                        let value = e.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+                        let value = e.target.value.replace(/[^0-9]/g, ""); 
                         if (value.length <= 10) {
                           setFormData((prev) => ({
                             ...prev,

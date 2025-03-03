@@ -74,7 +74,7 @@ export default function domesticCleaning() {
         <h1 className="text-purple-700 text-2xl mt-80">
           Book Now and Get a 10% Discount on your first domestic cleaning, when you book regular cleaning (Weekly, Fortnightly, or Monthly). (First booking only)
         </h1>
-        <p className="py-6">At City Housekeeping, we understand that a clean home is a happy home. That's why our domestic cleaning services are designed to meet your every need, ensuring a pristine environment without the hassle. Our experienced and trustworthy cleaners specialize in delivering top-notch home cleaning services that not only meet but exceed your expectations.</p>
+        <p className="py-6">At CleaningMastersLondon, we understand that a clean home is a happy home. That's why our domestic cleaning services are designed to meet your every need, ensuring a pristine environment without the hassle. Our experienced and trustworthy cleaners specialize in delivering top-notch home cleaning services that not only meet but exceed your expectations.</p>
 
         <h1 className="text-purple-700 text-2xl">
           Why Choose cleaningMasterLondon for Domestic Cleaning?

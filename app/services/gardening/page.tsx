@@ -86,7 +86,7 @@ export default function domesticCleaning() {
                             Maintaining a garden can be time-consuming and exhausting, but it doesn’t have to be. Whether you need assistance with trimming, leaf collection, hedge cutting, or landscaping, our experts can save you valuable time and effort.
                         </p>
                         <p className="text-gray-700 mb-4">
-                            By choosing City Housekeeping, you can be confident that your garden will look its best, allowing you to enjoy your outdoor space without the hassle. Our services are designed to bring out the full potential of your garden, whether you’re looking to improve the aesthetics, boost the health of your plants, or simply keep things tidy.
+                            By choosing CleaningMastersLondon, you can be confident that your garden will look its best, allowing you to enjoy your outdoor space without the hassle. Our services are designed to bring out the full potential of your garden, whether you’re looking to improve the aesthetics, boost the health of your plants, or simply keep things tidy.
                         </p>
                         <p className="text-gray-700 mb-6">
                             We are dedicated to making sure that every aspect of your garden is cared for with precision and expertise.
@@ -94,7 +94,7 @@ export default function domesticCleaning() {
 
                         <h3 className="text-purple-700 text-xl font-bold mb-3">Your Garden, Your Way</h3>
                         <p className="text-gray-700 mb-6">
-                            At City Housekeeping, we understand that every garden is unique. That’s why we offer flexible service options, allowing you to decide what areas need attention and when. Whether you need a one-time cleanup or regular maintenance, we will work around your schedule to ensure your garden is always in top shape.
+                            At CleaningMastersLondon, we understand that every garden is unique. That’s why we offer flexible service options, allowing you to decide what areas need attention and when. Whether you need a one-time cleanup or regular maintenance, we will work around your schedule to ensure your garden is always in top shape.
                         </p>
 
                         <h3 className="text-purple-700 text-xl font-bold mb-3">Get in Touch Today!</h3>
@@ -107,7 +107,7 @@ export default function domesticCleaning() {
                     </div>
                 </div>
                 <div className="pt-4 flex justify-center items-center flex-col">
-                    <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
+                    <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your Gardening service is easy at BOOK NOW!</h1>
                     <Link href="/booknow">
                         <button className="font-bold text-xl text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-50 p-3 rounded-full">
                             <span>Book your Cleaning Today</span>

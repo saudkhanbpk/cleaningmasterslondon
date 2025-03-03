@@ -255,10 +255,9 @@ export default function ModelPage() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-
       if (response.data.success) {
+        router.push('/confirmation');
         toast.success("Form submitted successfully!");
-        router.push("/");
       } else {
         toast.error(response.data.message || "An error occurred.");
       }
@@ -269,7 +268,6 @@ export default function ModelPage() {
       setLoading(false);
     }
   };
-
   const resendOtp = async () => {
     try {
       setLoading(true);
@@ -280,7 +278,6 @@ export default function ModelPage() {
       const response = await axios.post(`${API_BASE_URL}/api/v1/create-user`, {
         emailAddress: emailFormData.emailAddress,
       });
-
       if (response.data.success) {
         toast.success(response.data.message);
         setLoading(false);
@@ -368,8 +365,6 @@ export default function ModelPage() {
 
         try {
           setLoading(true);
-
-
 
           const response = await axios.post(
             `${API_BASE_URL}/api/v1/verify-otp`,
@@ -900,7 +895,7 @@ export default function ModelPage() {
                           ...prev,
                           receptionRoomsOther: "",
                         }))
-                      } // Remove error on click
+                      } 
                       onChange={(e) =>
                         handleOtherInput("receptionRooms", e.target.value)
                       }

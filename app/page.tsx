@@ -80,9 +80,6 @@ export default function Home() {
       image: require("@/assets/gardening/hero.jpg"),
     },
   ];
-
-
-
   const sliderSettings = {
     infinite: true,
     speed: 500,
@@ -107,7 +104,6 @@ export default function Home() {
       },
     ],
   };
-
   const testimonials = [
     {
       id: 1,
@@ -116,7 +112,7 @@ export default function Home() {
       role: "Homeowner",
 
       comment:
-        "The best cleaning service I've ever used. Professional.",
+      "This is the best cleaning service I've ever hired. Their team is professional, ensuring everything is spotless and giving me peace of mind every time they clean.",
       rating: 5,
     },
     {
@@ -125,7 +121,7 @@ export default function Home() {
       name: "Michael Chen",
       role: "Business Owner",
       comment:
-        "Exceptional attention to detail. My office has never looked better.",
+       "Their attention to detail is incredible. My office has never looked so clean, and their work has improved the overall atmosphere of the space significantly.",
       rating: 5,
     },
     {
@@ -133,11 +129,10 @@ export default function Home() {
       image: Client3,
       name: "Emily Davis",
       role: "Property Manager",
-      comment: "Friendly staff and outstanding results. Highly recommended!",
+      comment:"The staff was friendly and efficient, and the results exceeded my expectations. I highly recommend their service and will definitely use them again in the future.",
       rating: 5,
     },
   ];
-
   const features = [
     {
       icon: <Shield className="w-12 h-12 text-primary" />,
@@ -173,7 +168,6 @@ export default function Home() {
       description: "Your complete satisfaction is our top priority",
     },
   ];
-
   return (
     <div className="bg-background overflow-hidden mx-auto">
       <motion.section
@@ -221,7 +215,7 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.section>
-      <section id="services" className="py-10">
+      <section id="services" className="pt-10">
         <div className="container mx-auto px-4">
           <motion.div
             className="max-w-2xl mx-auto text-center mb-12"
@@ -279,7 +273,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-10 bg-secondary/10">
+      <section className="pt-10 bg-secondary/10">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <motion.h2
@@ -326,7 +320,7 @@ export default function Home() {
 
         </div>
       </section>
-      <section className="container  mx-auto mb-4">
+      <section className="container  mx-auto mb-4 pt-10">
         <div className=" text-center max-w-2xl mx-auto">
           <h1 className="font-bold text-3xl text-purple-700">Three Steps to a Cleaner Home</h1>
           <p className="text-gray-700 text-2xl">…easy as 1-2-3</p></div>
@@ -376,7 +370,7 @@ export default function Home() {
         <Blog />
       </div>
 
-      <section id="testimonials" className="py-10 bg-secondary/20">
+      <section id="testimonials" className="pt-10 bg-secondary/20">
   <div className="px-4 container mx-auto">
     <motion.div
       className="mx-auto text-center container mb-4"
@@ -390,7 +384,6 @@ export default function Home() {
         Do not just take our word for it - hear from our satisfied customers
       </p>
     </motion.div>
-
     <Slider {...sliderSettings}>
       {testimonials.map((testimonial, index) => (
         <motion.div
@@ -426,23 +419,18 @@ export default function Home() {
     </Slider>
   </div>
 </section>
-
-
-
-      <div className="py-6 text-gray-100 text-center">
+      <div className="py-10 text-gray-100 text-center">
         <Link href="/booknow">
           <button className="font-bold text-xl text-white p-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 rounded-full">
-            Book Cleaning Today
+            Book Your Cleaning Today
           </button>
         </Link>
         <div className="mt-2 text-sm text-gray-100">
           <p className="text-gray-700 container px-10 lg:px-40 mx-auto">We’re your trusted local cleaning experts, dedicated to providing thorough and reliable service every time.
-            Call for a Free Estimate today! CityHousekeeping is ready to make your home shine: 020-33-22-23-23.</p>
+            Call for a Free Estimate today! CleaningMastersLondon is ready to make your home shine: +44 7701 325857.</p>
         </div>
       </div>
     </div>
-
-
   );
 }
 

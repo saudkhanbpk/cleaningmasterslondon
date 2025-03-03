@@ -120,13 +120,13 @@ export default function domesticCleaning() {
         </h1>
       </div>
       <div className=" px-4 mx-auto container py-4">
-        <h1 className="text-purple-700 text-2xl mt-80">
+        <h1 className="text-purple-700 font-bold text-2xl mt-80">
         Current Offer:
         </h1>
         <p className="py-2 text-gray-600 text-xl">1. Book Now and Get Free Carpet Cleaning for 1 Room <br/> 
         2. When you book and pay for a minimum of 3 carpets. </p>
 
-        <h1 className="text-purple-700 text-2xl">
+        <h1 className="text-purple-700 text-xl">
         Just a few clicks and you can arrange for a professional cleaner to take the stress out of your daily routine, leaving you with a spotless home to enjoy.
         </h1>
       <div className="mt-12">
@@ -209,7 +209,7 @@ export default function domesticCleaning() {
         If you’re looking for top-notch steam carpet cleaning, upholstery sofa steaming, or mattress steaming services, look no further. Contact CityHousekeeping today to schedule a service or learn more about how we can help you maintain a clean and healthy environment in your home or office. Our commitment to quality and customer satisfaction ensures that your fabrics are in good hands.
         </p> */}
 
-        <h1 className="text-3xl font-bold text-center text-purple-700 mb-6">
+        <h1 className="text-3xl font-bold text-center text-purple-700 mt-10 mb-6">
         Our Cleaning Prices
       </h1>
       <div className="flex flex-col md:flex-row gap-3 items-start">
@@ -241,7 +241,7 @@ export default function domesticCleaning() {
         </div>
     </div> 
         <div className="pt-4 flex justify-center items-center flex-col">
-          <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your domestic cleaning service is easy at BOOK NOW!</h1>
+          <h1 className="text-center font-semibold text-purple-700 pb-2">Scheduling your Carpet cleaning service is easy at BOOK NOW!</h1>
           <Link href="/booknow">
           <button className="font-bold text-xl text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-50 p-3 rounded-full">
             <span>Book your Cleaning Today</span>
