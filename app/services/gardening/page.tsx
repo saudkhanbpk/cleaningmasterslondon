@@ -36,7 +36,7 @@ export default function domesticCleaning() {
                 </h1>
             </div>
             <div className=" px-4 mx-auto container py-4">
-                <div className="mt-80 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div className="mt-80 grid grid-cols-1  lg:grid-cols-2  gap-8 items-center">
                     <div>
                         <p className="text-gray-700 mb-4">
                             Taking care of your garden requires time, expertise, and dedication. At CleaningMastersLondon, our professional gardening team is here to help you maintain a beautiful, healthy outdoor space throughout the year. Whether you need regular maintenance or specialized care, we provide a wide range of services tailored to meet your garden’s specific needs.
@@ -64,12 +64,12 @@ export default function domesticCleaning() {
                         <Image
                             src={hero1}
                             alt="Gardening Tools and Flowers"
-                            className="rounded-lg shadow-lg object-cover"
+                            className="hidden md:hidden lg:block rounded-lg shadow-lg object-cover"
                         />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-10 mb-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mt-10 mb-10">
                     {/* Image Section */}
                     <div>
                         <img

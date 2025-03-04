@@ -209,9 +209,9 @@ export default function tenancyCleaning() {
           <li><span className="font-bold">Prevents Dirt Buildup:</span> Regular cleaning prevents dirt and grime from accumulating, saving you time in the long run.</li>
           <li><span className="font-bold">Peace of Mind:</span> Enjoy a clean and tidy home without the stress of cleaning it yourself.</li>
         </ul>
-        <div className="flex flex-col md:flex-row items-start gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-3">
           {pricingData.map((category, index) => (
-            <div key={index} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden w-full md:w-1/3 flex flex-col">
+            <div key={index} className="bg-gray-100 shadow-lg rounded-lg overflow-hidden w-full">
               <h2 className="text-xl font-bold text-purple-700 text-center p-4">{category.title}</h2>
               <table className="w-full border-collapse flex-1">
                 <thead>

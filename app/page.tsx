@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { useEffect } from "react";
 import Blog from "@/app/home-blogs/page";
+import CompaniesBrands from "./home-Cleaningbrands/page";
 import {
   CheckCircle2,
   Sparkles,
@@ -215,6 +216,9 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.section>
+      <section className="pt-10 px-4 mx-auto container">
+<CompaniesBrands/>
+      </section>
       <section id="services" className="pt-10">
         <div className="container mx-auto px-4">
           <motion.div
@@ -283,7 +287,7 @@ export default function Home() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5 }}
             >
-              Why Choose CleanPro
+              Why Choose CleaningMastersLondon
             </motion.h2>
             <motion.p
               className="text-gray-600"

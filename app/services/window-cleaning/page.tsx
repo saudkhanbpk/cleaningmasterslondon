@@ -60,7 +60,7 @@ export default function windowCleaning() {
             </div>
             <div className=" px-4 mx-auto container py-4">
 
-                <div className="grid md:grid-cols-2 gap-8 items-center mt-80">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mt-80">
                     {/* Left Content */}
                     <div>
                         <h2 className="text-purple-700 text-2xl font-bold">
